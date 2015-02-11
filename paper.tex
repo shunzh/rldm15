@@ -59,29 +59,29 @@ Reinforcement learning, human motion, inverse learning
 
 \section{Introduction}
 
-Human is able to learn accomplishing complicated tasks much faster than machines
-can do. However, most of the tasks can be decomposed into subtasks. A human may
-already have the capacity to accomplish the subtasks. He simply transfers the
-knowledge of the subtasks and integrate them for the objective task. For example,
-when a human learns to drive, he has much prior domain knowledge to help him
-with this objective task. He integrates his skills of controlling the velocity,
-avoiding other vehicles, navigating, responding to traffic lights, and so on.
+A large body of evidence from human and other primate studies studies 
+suggests that they use reinforcement signals to learn tasks and reinforcement 
+learning has proved to be a good model for this process.
+However humans are able to learn and carry out very complex tasks involving 
+many different objectives. 
 
-Similar ideas are also adopted in the learning literature. Reinforcement learning
-suffers from the curse of dimensionality. It is inefficient for a learning agent
-to learn a complicated task from scratch. So learning algorithms including
-hierarchical reinforcement learning \cite{dietterich2000hierarchical}, modular
-reinforcement learning \cite{sprague2003multiple} are proposed. They also
-decompose the objective task into subtasks. The learning algorithms first learn
-the subtasks independently, then learn how to combine these subtasks.
+How can they do this? The likelihood is that they use rinforcement in this 
+comtext as well but most formal reinforcement learning models do not scale 
+well with increasing complexity.
 
-A natural question to ask is how human integrates skills for subtasks, and
-whether we can use the same method for integrating subtasks in reinforcement
-learning problems. In this paper, we analyze human's behavior of
-accomplishing a task composite of various subtasks. We collected human motion
-data and try to interpret the behavior using a way of
-inverse reinforcement learning. With the best of our knowledge, this approach is
-novel in the literature.
+One promising possibiity is that the complex task can be broken down into 
+subtasks that are each learned separately \cite{sprague2003multiple,
+rothkopf2013modular}. 
+For certain task venues, this decomposition allows the behavior in the complex 
+task to be specified as a eighted sum of individal sub-task priorities.
+This paper explores the use of such a decomposition to characterize complex 
+behavior of subjects in a structure virtual reality environment. The 
+methodology of \cite{rothkopf2013modular} allows the task priorities to be
+estimated using the subjects' behavioral data.
+
+Our experimental analysis shows that the modular reinforcement can be a 
+surprisingly good model of behavior, predicting individual subjects' sub-task 
+priorities in a way that explains their beahvioral choices.
 
 This paper is organized as follows. Section~\ref{sec:domain} introduces the
 domain of the composite task that we collected human data. Section~\ref{sec:rl}
@@ -89,7 +89,7 @@ describes the main algorithm, modular inverse reinforcement learning. We report
 our experiment results in Section~\ref{sec:exp}, and conclude in
 Section~\ref{sec:conclude}.
 
-\section{Multi-objective Sidewalk Domain}
+\section{Multi-objective Domain}
 \label{sec:domain}
 
 \begin{figure}[h!]
@@ -101,7 +101,8 @@ body tracker.  (Right) The environment the human can see through the displayer.}
 \label{fig:avatar}
 \end{figure}
 
-Figure~\ref{fig:avatar} shows the domain that we use in this paper. The red
+%FIXME
+In Figure~\ref{fig:avatar} shows the domain that we use in this paper. The red
 cubes represent obstacles, that the player would be punished if running
 into. The blue balls represent targets, that the player would be rewarded if
 collected. There is also a gray path on the ground that the player can follow.
@@ -131,7 +132,8 @@ subtasks, could they be integrated to match human's behavior?
 \section{Modular Inverse Reinforcement Learning}
 \label{sec:rl}
 
-We need some basic concepts in reinforcement learning to proceed. For a state, action
+%FIXME
+For a state, action
 pair, $s$ and $a$, $Q(s, a)$ evaluates the utility of taking action $a$ from
 state $s$. The {\em policy} of a state is the action with the maximum Q
 value \cite{rl}. So how to we determine the global policy from the modules, or
@@ -170,7 +172,7 @@ values of taking other actions.
 \section{Experiments}
 \label{sec:exp}
 
-We train the modules first to get $Q_i$ before running the inverse reinforcement
+We trained the modules first to get $Q_i$ before running the inverse reinforcement
 learning algorithm. For each module, the agent only considers the closest target
 and the closest obstacle. For the path module, the path is defined as segments
 of waypoints, so the closest waypoint is considered. The agent takes the
@@ -181,6 +183,7 @@ normalize the sub-MDPs with the unit (positive or negative) rewards. The reward
 is 1 for collecting a target, -1 for running into an obstacle. We define the
 value function directly for the path module to have a path following
 performance, as it is tricky to give reward for such performance.
+% emphasize that path following is not an RL module?
 
 We make some constraints on our learning agent to make it walk like a human.
 We can find in the human trajectories that humans walk smoothly. They don't turn
