@@ -144,15 +144,44 @@ $s_i$ denotes the decomposition of $s$ in the i-th module.
 Different weights can yield different performance. Let $w_1, w_2, w_3$ be
 weights for the task of target collection, obstacle avoidance, and path
 following, respectively. Let $w$ be the vector of $(w_1, w_2, w_3)$. An agent
-with $w = (1, 0, 0)$ only collect targets, and one with $w = (0, 0.5, 0.5)$ may
+with $w = (1, 0, 0)$ only collects targets, and one with $w = (0, 0.5, 0.5)$ may
 avoid the obstacles and follow the path.
 
 To obtain the weights given the samples, we need to use the Inverse Modular
-Reinforcement Learning technique \cite{rothkopf2013modular}.
+Reinforcement Learning technique \cite{rothkopf2013modular}. We use a maximum
+likelihood method here.
+\begin{equation}
+\label{eq:irl}
+\max_w \prod_t \frac{e^{\eta Q(s^{(t)}, a^{(t)})}}{\sum_b e^{\eta Q(s^{(t)}, b)}}
+\end{equation}
+where $s^{(t)}$ is the state at time $t$, and $a^{(t)}$ is the action at time
+$t$, which are both from samples. $Q(s, a) = \sum_i w_i Q_i(s_i, a)$, as defined
+before. $\eta$ is a hyperparameter that determines the consistency of human's
+behavior. The larger $\eta$ is, the algorithm more tends to overfit the data.
 
+The intuition of Equation~\ref{eq:irl} is that if an action is observed from the
+sample, then the Q value of taking that action should be larger compared to Q
+values of taking other actions.
 
 \section{Experiments}
 \label{sec:exp}
+
+We train the modules first to get $Q_i$ before running the inverse reinforcement
+learing algorithm. For each module, the agent only considers the closest target
+and the closest obstacle. For the path module, the path is defined as segments
+of waypoints, so the closest waypoint is considered. The agent takes the
+distance and angle to the closest objects as the state representation.
+
+To make our weights represent the significance of the modules, we
+normalize the sub-MDPs with the unit (positive or negative) rewards. The reward
+is 1 for collecting a target, -1 for running into an obstacle. We define the
+value function directly for the path module to have a path following
+performance, as it is tricky to give reward for such performance.
+
+We make some constraints on our learning agent to make it walk like a human.
+We can find in the human trajectories that humans walk smoothly. They don't turn
+sharply.  Our agent is only allowed to do three actions --- going straight ahead,
+turning left with a small step, and turning right with a small step.
 
 \begin{figure}[h!]
 \centering
@@ -160,48 +189,12 @@ Reinforcement Learning technique \cite{rothkopf2013modular}.
 \includegraphics[width=0.24\textwidth]{task_2.png}
 \includegraphics[width=0.24\textwidth]{task_3.png}
 \includegraphics[width=0.24\textwidth]{task_4.png}
-\caption{}
+\caption{The trajectories of humans and our agent in four different tasks. The
+upper two are Task 1 and 2. The lower two are Task 3 and 4.}
 \label{fig:exp}
 \end{figure}
 
-From a different perspective, can we find a weight vector to best interpret
-human's behavior. In Figure~\ref{fig:exp}, same as Figure~\ref{fig:avatar}, the
-red circles are obstacles. The blue circles are targets. The gray line is the
-path. The black lines are trajectories of human.
-%TODO
-
-We make some constraints on our learning agent to make it walk like a human.
-We can find in the human trajectories that humans walk smoothly. They don't turn
-sharply.  Our agent is allowed to do three actions --- going straight ahead,
-turning left with a small step, and turning right with a small step.
-
-To make our weights represent the significance of the modules, we
-normalize the sub-MDPs with the unit (positive or negative) rewards. The reward
-is 1 for collecting a target, -1 for running into an obstacle. We define the
-value function directly for the path module to have a path following performance.
-
-The agent only considers the closest target and the closest obstacle.
-
-We assume that our learning agent only knows the three sub-MDPs and the human
-data. It looks at the human behavior, and finds the weights that can interpret
-such behavior. 
-Using such weights, the trajectories of our agents are drawn in the green lines.
-We can tell that in the left figure, the agent puts a large weight on
-path-following.  In the right figure, it puts weights on all sub-MDPs.
-
-\begin{figure}[h!]
-\centering
-\includegraphics[width=0.4\textwidth]{objValuesTask1.png}
-\includegraphics[width=0.4\textwidth]{objValuesTask2.png}
-\includegraphics[width=0.4\textwidth]{objValuesTask3.png}
-\includegraphics[width=0.4\textwidth]{objValuesTask4.png}
-\caption{Heatmaps of the objective values of different weights for the four
-tasks, respectively. The red zones indicate higher values. The upper two are
-Task 1 and 2. The lower two are Task 3 and 4.}
-\label{fig:heatmap}
-\end{figure}
-
-\begin{table}[h]
+\begin{table}[h!]
 \centering
 \begin{tabular}{| l| l| l |}
 \hline
@@ -217,9 +210,10 @@ Average by Task & Num Targs Hit & Num Obst Hit\\
 \hline
 \end{tabular}
 \caption{Number of targets hit and number of obstacles hit of the humans.}
+\label{tb:human}
 \end{table}
 
-\begin{table}[h]
+\begin{table}[h!]
 \centering
 \begin{tabular}{| l| l| l |}
 \hline
@@ -235,15 +229,44 @@ Average by Task & Num Targs Hit & Num Obst Hit\\
 \hline
 \end{tabular}
 \caption{Number of targets hit and number of obstacles hit of the learning agent.}
+\label{tb:agent}
 \end{table}
 
-In Figure~\ref{fig:heatmap}, we show the object values for different weights.
+We report the results in Figure~\ref{fig:exp}, same as Figure~\ref{fig:avatar},
+the red circles are obstacles. The blue circles are targets. The gray line is
+the path. The black lines are trajectories of human --- each line represents one
+human trajectory.
+Using the weights derived from the algorithm, the trajectories of our agents are
+drawn in the green lines.
 
+Although humans don't agree each other on how to avoid obstacles or collecting
+targets, our agent can figure out what the humans are doing, and perform the
+similar performance. Table~\ref{tb:human} and Table~\ref{tb:agent} show the
+number of targets hit and number of obstacles hit. Note that the numbers bolded
+are active modules in the corresponding task. We can observe that humans still
+do better than our agent in these tasks.
+
+\begin{figure}[h!]
+\centering
+\includegraphics[width=0.4\textwidth]{objValuesTask1.png}
+\includegraphics[width=0.4\textwidth]{objValuesTask2.png}
+\includegraphics[width=0.4\textwidth]{objValuesTask3.png}
+\includegraphics[width=0.4\textwidth]{objValuesTask4.png}
+\caption{Heatmaps of the $\log$ of values of Equation~\ref{eq:irl} for different
+weights for the four tasks, respectively. The red zones indicate higher values.
+From left to right are Task 1 to Task 4.}
+\label{fig:heatmap}
+\end{figure}
+
+In Figure~\ref{fig:heatmap}, we show the $\log$ of values of Equation~\ref{eq:irl} for
+different weights. We can observe the centroids of red zones move for different
+tasks. It stays at the origin in Task 1, so none of target and obstacle modules
+are active. It moves away from the origin when a module is active.
 
 \section{Conclusion and Future Work}
 \label{sec:conclude}
 
-Weighted sum of Q function is one way to combine multiple sub-MDPs. We also
+Weighted sum of Q functions is one way to combine multiple sub-MDPs. We also
 propose other ways including, for example, scheduling between different modules,
 with only one active at one time. This is also called skilled in the literature
 \cite{konidaris2009skill}. However, we adopt the weighted sum approach
