@@ -94,24 +94,24 @@ Section~\ref{sec:conclude}.
 
 \begin{figure}[h!]
 \centering
-\includegraphics[height=6cm]{human.jpg}
-\includegraphics[height=6cm]{env.png}
-\caption{(Left) A volunteer with head tracker, virtual reality displayer, and
+\includegraphics[height=5cm]{human.jpg}
+\includegraphics[height=5cm]{env.png}
+\caption{(Left) A human subject with head tracker, virtual reality displayer, and
 body tracker.  (Right) The environment the human can see through the displayer.}
 \label{fig:avatar}
 \end{figure}
 
 %FIXME
 In Figure~\ref{fig:avatar} shows the domain that we use in this paper. The red
-cubes represent obstacles, that the player would be punished if running
-into. The blue balls represent targets, that the player would be rewarded if
-collected. There is also a gray path on the ground that the player can follow.
+cubes represent obstacles, that the agent would be punished if running
+into. The blue balls represent targets, that the agent would be rewarded if
+collected. There is also a gray path on the ground that the agent can follow.
 Naturally, this domain has three subtasks, 1) following the path, 2)
 collecting targets, 3) avoiding obstacles.
 This is an experiment used in the
 literature to evaluate modular reinforcement learning
 \cite{rothkopf2013modular}.
-We ask our volunteers to have trackers and virtual reality displayers equipped. He
+We ask human subjects to have trackers and virtual reality displayers equipped. He
 can see the envrionment through the displayer in front of his eyes. So he can
 walk as if he is walking in the virtual domain.
 
@@ -120,11 +120,11 @@ ignoring other objects. {\bf Task 2}, following the path, while avoid the obstac
 {\bf Task 3}, following the path, while attain targets when possible. {\bf Task 4},
 following the path, collecting the targets and avoiding obstacles
 simultaneously.
-We conducted experiments to ask volunteers to accomplish different tasks and
+We conducted experiments to ask human subjects to accomplish different tasks and
 recorded their trajectories. The human data are collected by the Center for
 Perceptual Systems at University of Texas at Austin.
 
-If the player observes the distance and angle to an object, he is expected to
+If the agent observes the distance and angle to an object, he is expected to
 know the optimal action to avoid or pursue it. This decision is also Markov.
 Therefore, the question would be, if we have trained modules for these three
 subtasks, could they be integrated to match human's behavior?
@@ -196,63 +196,32 @@ turning left with a small step, and turning right with a small step.
 \includegraphics[width=0.24\textwidth]{task_2.png}
 \includegraphics[width=0.24\textwidth]{task_3.png}
 \includegraphics[width=0.24\textwidth]{task_4.png}
-\caption{The trajectories of humans and our agent in four different tasks. From
-left to right are Task 1 to Task 4. The active modules should be (Path),
+\caption{The trajectories of humans and the agent in four different tasks. (Path),
 (Obstacle + Path), (Target + Path), (Target + Obstacle + Path), respectively.}
 \label{fig:exp}
 \end{figure}
-
-\begin{table}[h!]
-\centering
-\begin{tabular}{| l| l| l |}
-\hline
-Average by Task & Num Targs Hit & Num Obst Hit\\
-\hline
-1 & 2.34 &  2.13\\
-\hline
-2 & 3.03 &  \bf{0.13}\\
-\hline
-3 & \bf{10.19} & 2.28\\
-\hline
-4 & \bf{9.88} &  \bf{0.03}\\
-\hline
-\end{tabular}
-\caption{Number of targets hit and number of obstacles hit of the humans.}
-\label{tb:human}
-\end{table}
-
-\begin{table}[h!]
-\centering
-\begin{tabular}{| l| l| l |}
-\hline
-Average by Task & Num Targs Hit & Num Obst Hit\\
-\hline
-1 & 1.25 & 1.62\\
-\hline
-2 & 3.62 & \bf{2.37}\\
-\hline
-3 & \bf{5.14} & 3.14\\
-\hline
-4 & \bf{5.00} & \bf{2.00}\\
-\hline
-\end{tabular}
-\caption{Number of targets hit and number of obstacles hit of the learning agent.}
-\label{tb:agent}
-\end{table}
 
 We report the results in Figure~\ref{fig:exp}, same as Figure~\ref{fig:avatar},
 the red circles are obstacles. The blue circles are targets. The gray lines are
 the path. The black lines are trajectories of human --- each line represents one
 human trajectory.
-Using the weights derived from the algorithm, the trajectories of our agents are
+Using the weights derived from the algorithm, the trajectories of the agents are
 drawn in green color.
 
+\begin{figure}[h!]
+\centering
+\includegraphics[width=0.6\textwidth]{contactStats.png}
+\caption{Number of targets hit and number of obstacles hit of the human subjects
+and the agent.}
+\label{fig:heatmap}
+\end{figure}
+
 Although humans don't agree each other on how to avoid obstacles or collecting
-targets, our agent can figure out what the humans are doing, and perform a
+targets, the agent can figure out what the humans are doing, and perform a
 similar trajectory. Table~\ref{tb:human} and Table~\ref{tb:agent} evaluate the
 performance by showing the number of targets hit and number of obstacles hit.
 Note that the numbers bold-ed are active modules in the corresponding task. We
-can observe that humans still do better than our agent in these tasks.
+can observe that humans still do better than the agent in these tasks.
 
 \begin{figure}[h!]
 \centering
@@ -279,7 +248,7 @@ weights are also consistent with the experiment context.
 \label{sec:conclude}
 
 We interpreted human behavior using inverse module reinforcement learning in
-this paper. We have some positive results, but the performance of our agent is
+this paper. We have some positive results, but the performance of the agent is
 still inferior than humans.
 
 There are also some observations potential for the future work. First, 
