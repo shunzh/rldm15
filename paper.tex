@@ -59,7 +59,7 @@ Reinforcement learning, human cognition, inverse learning
 
 \section{Introduction}
 
-Human is able to learn to accomplish complicated tasks much faster than machines
+Human is able to learn accomplishing complicated tasks much faster than machines
 can do. However, most of the tasks can be decomposed into subtasks. A human may
 already have the capacity to accomplish the subtasks. He simply transfers the
 knowledge of the subtasks and integrate them for the objective task. For example,
@@ -79,9 +79,9 @@ A natural question to ask is how human integrates skills for subtasks, and
 whether we can use the same method for integrating subtasks in reinforcement
 learning problems. In this paper, we analyze human's behavior of
 accomplishing a task composite of various subtasks. We collected human motion
-data when human accomplish a task, and try to interpret the behavior using
+data and try to interpret the behavior using a way of
 inverse reinforcement learning. With the best of our knowledge, this approach is
-noval in the literature.
+novel in the literature.
 
 This paper is organized as follows. Section~\ref{sec:domain} introduces the
 domain of the composite task that we collected human data. Section~\ref{sec:rl}
@@ -109,9 +109,9 @@ collecting targets, 3) avoiding obstacles. This is an experiment used in the
 literature to evaluate modular reinforcement learning
 \cite{rothkopf2013modular}.
 
-We will evaluate four different tasks. Task 1, following the path only, and
-ignoring other objects. Task 2, following the path, while avoid the obstacles.
-Task 3, following the path, while attain targets when possible.  Task 4,
+We will evaluate four different tasks. \bf{Task 1}, following the path only, and
+ignoring other objects. \bf{Task 2}, following the path, while avoid the obstacles.
+\bf{Task 3}, following the path, while attain targets when possible. \bf{Task 4},
 following the path, collecting the targets and avoiding obstacles
 simultaneously.
 We conducted experiments to ask volunteers to accomplish different tasks and
@@ -157,7 +157,7 @@ likelihood method here.
 where $s^{(t)}$ is the state at time $t$, and $a^{(t)}$ is the action at time
 $t$, which are both from samples. $Q(s, a) = \sum_i w_i Q_i(s_i, a)$, as defined
 before. $\eta$ is a hyperparameter that determines the consistency of human's
-behavior. The larger $\eta$ is, the algorithm more tends to overfit the data.
+behavior. The larger $\eta$ is, the algorithm is more likely to overfit the data.
 
 The intuition of Equation~\ref{eq:irl} is that if an action is observed from the
 sample, then the Q value of taking that action should be larger compared to Q
@@ -263,10 +263,18 @@ different weights. We can observe the centroids of red zones move for different
 tasks. It stays at the origin in Task 1, so none of target and obstacle modules
 are active. It moves away from the origin when a module is active.
 
+From the heatmaps, we find the optimums exist for these tasks. The optimal
+weights are also consistent with the experiment context.
+
 \section{Conclusion and Future Work}
 \label{sec:conclude}
 
-Weighted sum of Q functions is one way to combine multiple sub-MDPs. We also
+We interpreted human behavior using inverse module reinforcement learning in
+this paper. We have some positive results, but the performance of our agent is
+still inferior than humans.
+
+There are also some observations potential for the future work. First, 
+weighted sum of Q functions is one way to combine multiple sub-MDPs. We also
 propose other ways including, for example, scheduling between different modules,
 with only one active at one time. This is also called skilled in the literature
 \cite{konidaris2009skill}. However, we adopt the weighted sum approach
@@ -275,14 +283,15 @@ targets while avoiding obstacles, these two modules are expected to be both
 active. A scheduling approach may yield frequent oscillation between these two
 modules.
 
-We also assumes independency between modules. Correlation between modules
-doesn't impair our analysis in this paper. In Figure~\ref{fig:heatmap}, we can
-find that the target module and obstacle module tends to be negatively
+Second, we also assumes independency between modules. Correlation between
+modules doesn't impair our analysis in this paper. In Figure~\ref{fig:heatmap},
+we can find that the target module and obstacle module tends to be negatively
 correlated.
 
-Weights may be dynamic. However, with such assumption, we need to learn a
-mapping from state to weights. In this case, the curse of dimensionality still
-exists, and inverse learning would be difficult.
+Lastly, weights may be dynamic and different from state to state. However, with
+such assumption, we need to learn a mapping from state to weights. In this case,
+the curse of dimensionality still exists, and inverse learning would be
+difficult.
 
 \bibliographystyle{plain}
 \bibliography{paper}
