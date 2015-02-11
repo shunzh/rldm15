@@ -100,43 +100,52 @@ path. \cite{rothkopf2013modular}}
 \label{fig:avatar}
 \end{figure}
 
-Figure~\ref{fig:avatar} shows the domain that we use in this paper. 
+Figure~\ref{fig:avatar} shows the domain that we use in this paper. The pink
+cylinders represent obstacles, that the player would be punished if running
+into. The blue cylinders represent targets, that the player would be rewarded if
+collected. There is also a grey path on the ground that the player can follow.
+So, naturally, this domain has three subtasks, 1) following the path, 2)
+collecting targets, 3) avoiding obstacles. This is an experiment used in the
+literature to evaluate modular reinforcement learning
+\cite{rothkopf2013modular}.
 
-Consider the task illustrated in Figure~\ref{fig:avatar} A). The avatar is asked to
-do three sub-tasks simultaneously --- 1) following the path, indicated by the gray
-line on the ground, 2) getting targets, the blue cylinders, and 3) avoiding
-obstacles, the pink cylinders. This is an experiment design used in the
-literature to evaluate modular reinforcement learning \cite{rothkopf2013modular}.
-
-From the reinforcement learning perspective, this task can be decomposed to be
-three sub-tasks as described above.  In Figure~\ref{fig:avatar} B), if the agent
-knows the distance and angle to an object, he is expected to know the optimal
-action to avoid or pursue it.
-
-Task 1, following the
-path only, and ignoring other objects. Task 2, following the path, while avoid
-the obstacles. Task 3, following the path, while attain targets when possible.
-Task 4, following the path, collecting the targets and avoiding obstacles
+We will evaluate four different tasks. Task 1, following the path only, and
+ignoring other objects. Task 2, following the path, while avoid the obstacles.
+Task 3, following the path, while attain targets when possible.  Task 4,
+following the path, collecting the targets and avoiding obstacles
 simultaneously.
+We conducted experiments to ask volunteers to accomplish different tasks and
+recorded their trajectories. The human data are collected by the Center for
+Perceptual Systems in University of Texas at Austin.
 
-\section{Modular Reinforcement Learning}
+If the player observes the distance and angle to an object, as shown in
+Figure~\ref{fig:avatar} B), he is expected to know the optimal action to avoid
+or pursue it. This decision is also Markov. Therefore, the question would be, if
+we have trained modules for these three subtasks, could they be integrated to
+match human's behavior?
+
+\section{Modular Inverse Reinforcement Learning}
 \label{sec:rl}
 
-Reinforcement learning \cite{rl}.
-Value functions is decomposed \cite{koller1999computing}.
+We need some basic concepts in reinforcement learning to proceed. For a state, action
+pair, $s$ and $a$, $Q(s, a)$ evaluates the utility of taking action $a$ from
+state $s$. The {\em policy} of a state is the action with the maximum Q
+value\cite{rl}. So how to we determine the global policy from the modules, or
+subtasks? In the literature, work has been done to integrate the Q function
+\cite{koller1999computing} or compromise on policies directly
+\cite{thomas2012motor}.
 
- If a human knows the policies
-of the sub-tasks, or sub-MDPs, he can accomplish a complicated behavior by
-combining the sub-MDPs. That is,
-$$Q(s, a) = \sum_i w_i Q_i (s, a)$$
-where $Q_i$ is the Q value of the i-th sub-MDP, $w_i$ is the weight of the i-th
-sub-MDP. $w_i \geq 0, \sum_i w_i = 1$.
+Here, we assume that the global Q function is a weighted sum of all $Q_i$, where
+$Q_i$ is the Q function for i-th module.
+$$Q(s, a) = \sum_i w_i Q_i (s_i, a)$$
+where $w_i$ is the weight of the i-th sub-MDP. $w_i \geq 0, \sum_i w_i = 1$.
+$s_i$ denotes the decomposition of $s$ in the i-th module.
 
 Different weights can yield different performance. Let $w_1, w_2, w_3$ be
 weights for the task of target collection, obstacle avoidance, and path
-following, respectively. Let $w$ be the vector of $(w_i)_1^n$. An agent with $w
-= (1, 0, 0)$ only collect targets, and one with $w = (0, 0.5, 0.5)$ may avoid
-the obstacles and follow the path.
+following, respectively. Let $w$ be the vector of $(w_1, w_2, w_3)$. An agent
+with $w = (1, 0, 0)$ only collect targets, and one with $w = (0, 0.5, 0.5)$ may
+avoid the obstacles and follow the path.
 
 To obtain the weights given the samples, we need to use the Inverse Modular
 Reinforcement Learning technique \cite{rothkopf2013modular}.
@@ -144,11 +153,6 @@ Reinforcement Learning technique \cite{rothkopf2013modular}.
 
 \section{Experiments}
 \label{sec:exp}
-
-We conducted experiments to ask volunteers to accomplish different tasks and
-recorded their trajectories. There are four kind of tasks. 
-The human data are collected by the Center for Perceptual Systems in University
-of Texas at Austin.
 
 \begin{figure}[h!]
 \centering
