@@ -94,20 +94,25 @@ Section~\ref{sec:conclude}.
 
 \begin{figure}[h!]
 \centering
-\includegraphics[width=0.6\textwidth]{avatar.png}
-\caption{The task of collecting targets, avoiding obstacles and following the
-path. \cite{rothkopf2013modular}}
+\includegraphics[height=6cm]{human.jpg}
+\includegraphics[height=6cm]{env.png}
+\caption{(Left) A volunteer with head tracker, virtual reality displayer, and
+body tracker.  (Right) The environment the human can see through the displayer.}
 \label{fig:avatar}
 \end{figure}
 
-Figure~\ref{fig:avatar} shows the domain that we use in this paper. The pink
-cylinders represent obstacles, that the player would be punished if running
-into. The blue cylinders represent targets, that the player would be rewarded if
+Figure~\ref{fig:avatar} shows the domain that we use in this paper. The red
+cubes represent obstacles, that the player would be punished if running
+into. The blue balls represent targets, that the player would be rewarded if
 collected. There is also a gray path on the ground that the player can follow.
-So, naturally, this domain has three subtasks, 1) following the path, 2)
-collecting targets, 3) avoiding obstacles. This is an experiment used in the
+Naturally, this domain has three subtasks, 1) following the path, 2)
+collecting targets, 3) avoiding obstacles.
+This is an experiment used in the
 literature to evaluate modular reinforcement learning
 \cite{rothkopf2013modular}.
+We ask our volunteers to have trackers and virtual reality displayers equipped. He
+can see the envrionment through the displayer in front of his eyes. So he can
+walk as if he is walking in the virtual domain.
 
 We will evaluate four different tasks. {\bf Task 1}, following the path only, and
 ignoring other objects. {\bf Task 2}, following the path, while avoid the obstacles.
@@ -116,13 +121,12 @@ following the path, collecting the targets and avoiding obstacles
 simultaneously.
 We conducted experiments to ask volunteers to accomplish different tasks and
 recorded their trajectories. The human data are collected by the Center for
-Perceptual Systems in University of Texas at Austin.
+Perceptual Systems at University of Texas at Austin.
 
-If the player observes the distance and angle to an object, as shown in
-Figure~\ref{fig:avatar} B), he is expected to know the optimal action to avoid
-or pursue it. This decision is also Markov. Therefore, the question would be, if
-we have trained modules for these three subtasks, could they be integrated to
-match human's behavior?
+If the player observes the distance and angle to an object, he is expected to
+know the optimal action to avoid or pursue it. This decision is also Markov.
+Therefore, the question would be, if we have trained modules for these three
+subtasks, could they be integrated to match human's behavior?
 
 \section{Modular Inverse Reinforcement Learning}
 \label{sec:rl}
@@ -130,7 +134,7 @@ match human's behavior?
 We need some basic concepts in reinforcement learning to proceed. For a state, action
 pair, $s$ and $a$, $Q(s, a)$ evaluates the utility of taking action $a$ from
 state $s$. The {\em policy} of a state is the action with the maximum Q
-value\cite{rl}. So how to we determine the global policy from the modules, or
+value \cite{rl}. So how to we determine the global policy from the modules, or
 subtasks? In the literature, work has been done to integrate the Q function
 \cite{koller1999computing} or compromise on policies directly
 \cite{thomas2012motor}.
