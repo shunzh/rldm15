@@ -52,7 +52,7 @@ Austin, TX 78712 \\
 \end{abstract}
 
 \keywords{
-Reinforcement learning, human cognition, inverse learning
+Reinforcement learning, human motion, inverse learning
 }
 
 \startmain % to start the main 1-4 pages of the submission.
@@ -103,15 +103,15 @@ path. \cite{rothkopf2013modular}}
 Figure~\ref{fig:avatar} shows the domain that we use in this paper. The pink
 cylinders represent obstacles, that the player would be punished if running
 into. The blue cylinders represent targets, that the player would be rewarded if
-collected. There is also a grey path on the ground that the player can follow.
+collected. There is also a gray path on the ground that the player can follow.
 So, naturally, this domain has three subtasks, 1) following the path, 2)
 collecting targets, 3) avoiding obstacles. This is an experiment used in the
 literature to evaluate modular reinforcement learning
 \cite{rothkopf2013modular}.
 
-We will evaluate four different tasks. \bf{Task 1}, following the path only, and
-ignoring other objects. \bf{Task 2}, following the path, while avoid the obstacles.
-\bf{Task 3}, following the path, while attain targets when possible. \bf{Task 4},
+We will evaluate four different tasks. {\bf Task 1}, following the path only, and
+ignoring other objects. {\bf Task 2}, following the path, while avoid the obstacles.
+{\bf Task 3}, following the path, while attain targets when possible. {\bf Task 4},
 following the path, collecting the targets and avoiding obstacles
 simultaneously.
 We conducted experiments to ask volunteers to accomplish different tasks and
@@ -167,7 +167,7 @@ values of taking other actions.
 \label{sec:exp}
 
 We train the modules first to get $Q_i$ before running the inverse reinforcement
-learing algorithm. For each module, the agent only considers the closest target
+learning algorithm. For each module, the agent only considers the closest target
 and the closest obstacle. For the path module, the path is defined as segments
 of waypoints, so the closest waypoint is considered. The agent takes the
 distance and angle to the closest objects as the state representation.
@@ -189,8 +189,9 @@ turning left with a small step, and turning right with a small step.
 \includegraphics[width=0.24\textwidth]{task_2.png}
 \includegraphics[width=0.24\textwidth]{task_3.png}
 \includegraphics[width=0.24\textwidth]{task_4.png}
-\caption{The trajectories of humans and our agent in four different tasks. The
-upper two are Task 1 and 2. The lower two are Task 3 and 4.}
+\caption{The trajectories of humans and our agent in four different tasks. From
+left to right are Task 1 to Task 4. The active modules should be (Path),
+(Obstacle + Path), (Target + Path), (Target + Obstacle + Path), respectively.}
 \label{fig:exp}
 \end{figure}
 
@@ -233,18 +234,18 @@ Average by Task & Num Targs Hit & Num Obst Hit\\
 \end{table}
 
 We report the results in Figure~\ref{fig:exp}, same as Figure~\ref{fig:avatar},
-the red circles are obstacles. The blue circles are targets. The gray line is
+the red circles are obstacles. The blue circles are targets. The gray lines are
 the path. The black lines are trajectories of human --- each line represents one
 human trajectory.
 Using the weights derived from the algorithm, the trajectories of our agents are
-drawn in the green lines.
+drawn in green color.
 
 Although humans don't agree each other on how to avoid obstacles or collecting
-targets, our agent can figure out what the humans are doing, and perform the
-similar performance. Table~\ref{tb:human} and Table~\ref{tb:agent} show the
-number of targets hit and number of obstacles hit. Note that the numbers bolded
-are active modules in the corresponding task. We can observe that humans still
-do better than our agent in these tasks.
+targets, our agent can figure out what the humans are doing, and perform a
+similar trajectory. Table~\ref{tb:human} and Table~\ref{tb:agent} evaluate the
+performance by showing the number of targets hit and number of obstacles hit.
+Note that the numbers bold-ed are active modules in the corresponding task. We
+can observe that humans still do better than our agent in these tasks.
 
 \begin{figure}[h!]
 \centering
@@ -254,7 +255,8 @@ do better than our agent in these tasks.
 \includegraphics[width=0.4\textwidth]{objValuesTask4.png}
 \caption{Heatmaps of the $\log$ of values of Equation~\ref{eq:irl} for different
 weights for the four tasks, respectively. The red zones indicate higher values.
-From left to right are Task 1 to Task 4.}
+The upper two are Task 1 and 2. The lower two are Task 3 and 4.
+}
 \label{fig:heatmap}
 \end{figure}
 
@@ -285,8 +287,8 @@ modules.
 
 Second, we also assumes independency between modules. Correlation between
 modules doesn't impair our analysis in this paper. In Figure~\ref{fig:heatmap},
-we can find that the target module and obstacle module tends to be negatively
-correlated.
+we can tell that the target module and obstacle module tend to be negatively
+correlated from the shape of the red zones.
 
 Lastly, weights may be dynamic and different from state to state. However, with
 such assumption, we need to learn a mapping from state to weights. In this case,
