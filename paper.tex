@@ -147,12 +147,11 @@ sub-tasks, could they be integrated to match human's behavior?
 Recall that for a state, action
 pair, $s$ and $a$, $Q(s, a)$ evaluates the utility of taking action $a$ from
 state $s$. The {\em policy} of a state is the action with the maximum Q
-value \cite{rl}. So how to we determine the global policy from the modules, or
-sub-tasks? In the literature, work has been done to integrate the value
-functions of the sub-tasks, where the value function is decomposed for the
-sub-tasks \cite{koller1999computing}. The sub-tasks can also propose their own
-policies, while the global policy is a weighted sum of those sub-task policies
-\cite{thomas2012motor}.
+value \cite{rl}. So how do we determine the global policy from the modules, or
+sub-tasks? In the literature, work has been done to integrate the decomposed
+value functions of the sub-tasks \cite{koller1999computing}. The sub-tasks can
+also propose their own policies, while the global policy is a weighted sum of
+those sub-task policies \cite{thomas2012motor}.
 
 Here, we assume that the global Q function is a weighted sum of all $Q_i$, where
 $Q_i$ is the Q function for i-th module.
@@ -279,10 +278,10 @@ Nevertheless, the agent has a similar performance compared to human subjects.
 \includegraphics[width=\textwidth]{objValuesTask4.png}
 \caption{Target + Obstacle + Path. }
 \end{subfigure}
-\caption{Heatmaps of the $\log$ of the values of Equation~\ref{eq:irl} for different
-weights for the four tasks, respectively. The white zones indicate higher
-values. The weights of all three modules sum to 1, so we only show the weights
-on the target and the obstacle modules.
+\caption{Heatmaps of the $\log$ of the values of Equation~\ref{eq:irl} for
+different weights for the four tasks, respectively. The white zones indicate
+higher probabilities. The weights of all three modules sum to 1, so we only show
+the weights on the target and the obstacle modules.
 }
 \label{fig:heatmap}
 \end{figure}
