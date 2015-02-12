@@ -56,7 +56,7 @@ human is able to learn complex tasks efficiently, while reinforcement
 learning is known for suffering from the curse of dimensionality. We observe that
 tasks that human handles can usually be decomposed into smaller tasks, and human can
 learn small tasks quickly, and then learn how to integrate them to solve the
-original task. In this paper, we find that modular reinforcement learning can be
+orignal task. In this paper, we find that modular reinforcement learning can be
 used to model human behavior. We report experiments of using modular inverse
 reinforcement learning to find the way that human combines sub-tasks, given
 samples of real human data. Our simulation demonstrates that human behavior can
@@ -76,15 +76,15 @@ suggest that they use reinforcement signals to learn tasks and reinforcement
 learning has proved to be a good model for this process.
 However humans are able to learn and carry out very complex tasks involving 
 many different objectives. 
-How can they do this? The likelihood is that they use reinforcement in this 
-context as well but most formal reinforcement learning models do not scale 
+How can they do this? The likelihood is that they use rinforcement in this 
+comtext as well but most formal reinforcement learning models do not scale 
 well with increasing complexity.
 
-One promising possibility is that the complex task can be broken down into 
+One promising possibiity is that the complex task can be broken down into 
 sub-tasks that are each learned separately \cite{sprague2003multiple,
 rothkopf2013modular, dietterich2000hierarchical}. 
 For certain task venues, this decomposition allows the behavior in the complex 
-task to be specified as a weighted sum of individual sub-task priorities.
+task to be specified as a weighted sum of individal sub-task priorities.
 This paper explores the use of such a decomposition to characterize complex
 behavior of subjects in a virtual reality environment. The methodology of
 \cite{rothkopf2013modular} allows the task priorities to be estimated using the
@@ -92,7 +92,7 @@ subjects' behavioral data.
 
 Our experimental analysis shows that the modular reinforcement can be a 
 surprisingly good model of behavior, predicting individual subjects' sub-task 
-priorities in a way that explains their behavioral choices.
+priorities in a way that explains their beahvioral choices.
 
 This paper is organized as follows. Section~\ref{sec:domain} introduces the
 domain of the composite task that we collected human data. Section~\ref{sec:rl}
@@ -117,7 +117,7 @@ also a gray path on the ground that the human subject can follow.}
 Figure~\ref{fig:avatar} shows the domain that we used for our experiment. The
 agent, which is a human subject in this case, is in a virtual reality domain.
 We ask the human subject to have trackers and a virtual reality displayer
-equipped. He can see the environment through the displayer in front of his eyes,
+equipped. He can see the envrionment through the displayer in front of his eyes,
 and he can walk as if he is walking in the virtual domain.
 The agent would be punished if running into obstacles (red cubes), and rewarded
 if collecting targets (blue balls). There is a path on the ground that he can
@@ -160,19 +160,19 @@ $$Q(s, a) = \sum_i w_i Q_i (s_i, a)$$
 where $w_i$ is the weight of the i-th sub-MDP. $w_i \geq 0, \sum_i w_i = 1$.
 $s_i$ denotes the decomposition of $s$ in the i-th module.
 
-Different weights can yield different performance. Let $w$ be the vector of
-$(w_1, w_2, w_3)$, where $w_1, w_2, w_3$ are weights for the sub-tasks of target
-collection, obstacle avoidance, and path following, respectively. An agent with
-$w = (1, 0, 0)$ only collects targets, and one with $w = (0, 0.5, 0.5)$ may
+Different weights can yield different performance. Let $w$ be the vector of $(w_1, w_2, w_3)$. Let $w_1, w_2, w_3$ be
+weights for the sub-tasks of target collection, obstacle avoidance, and path
+following, respectively. An agent
+with $w = (1, 0, 0)$ only collects targets, and one with $w = (0, 0.5, 0.5)$ may
 avoid the obstacles and follow the path.
 
 To obtain the weights given the samples, we need to use the inverse
-reinforcement learning technique. In reinforcement learning, we derive 
+reinforcement learning technique. In reinforcement learning, we derive an
 optimal policies given an MDP. In inverse reinforcement learning, however, we
 find out the underlying MDP by observing policies. In the literature, a common
 way is to use a maximum likelihood method to recover the transition function and
 the reward function \cite{ng2000algorithms}. Here, however, we only need to find
-out the weights. The transition function is known, and the reward function is
+out the weights. The transtion function is known, and the reward function is
 trivially the weighted sum of that of modules. Concretely, we use the modular
 inverse reinforcement learning method \cite{rothkopf2013modular} to maximize the
 function below.
@@ -195,7 +195,7 @@ values of taking other actions.
 We trained the modules first to obtain $Q_i$ before running the inverse reinforcement
 learning algorithm. For each module, the agent only considers the closest target
 and the closest obstacle. For the path module, the path is defined as segments
-connected by waypoints, so the next waypoint is considered. The agent takes the
+of waypoints, so the closest waypoint is considered. The agent takes the
 distance and angle to the closest objects as the state representation.
 
 To make our weights represent the significance of the modules, we
@@ -210,7 +210,7 @@ We can find from the human trajectories that humans walk smoothly and do not tur
 sharply.  Our agent is only allowed to do three actions --- going straight ahead,
 turning left with a small step, and turning right with a small step.
 
-\begin{figure}[h]
+\begin{figure}[h!]
 \centering
 \begin{subfigure}[b]{0.24\textwidth}
 \includegraphics[width=\textwidth]{task_1.png}
@@ -237,7 +237,7 @@ obstacle, path order.}
 \label{fig:exp}
 \end{figure}
 
-\begin{figure}[h]
+\begin{figure}[h!]
 \centering
 \includegraphics[width=0.5\textwidth]{contactStats.png}
 \caption{Number of targets hit and number of obstacles hit of the human subjects
@@ -261,7 +261,7 @@ should be small, when the corresponding module is active.
 We can observe that humans still do better than the agent in these tasks.
 Nevertheless, the agent has a similar performance compared to human subjects.
 
-\begin{figure}[h]
+\begin{figure}[h!]
 \centering
 \begin{subfigure}[b]{0.4\textwidth}
 \includegraphics[width=\textwidth]{objValuesTask1.png}
@@ -299,11 +299,10 @@ optimal weights are also consistent with the experiment context.
 \label{sec:conclude}
 
 We interpreted human behavior using inverse module reinforcement learning in
-this paper. The experimental results show that modular reinforcement learning
-can well explain human behavior, even though the performance of the agent is
-inferior to human subjects'.
+this paper. We have some positive results, but the performance of the agent is
+still inferior than human subjectives'.
 
-There are also some observations potential for the future work. First, 
+There are also some observation potential for the future work. First, 
 weighted sum of Q functions is one way to combine multiple sub-MDPs. We also
 propose other ways including, for example, scheduling between different modules,
 with only one active at one time. This is also called {\em skill} in the literature
@@ -313,7 +312,7 @@ targets while avoiding obstacles, these two modules are expected to be both
 active. A scheduling approach may yield frequent oscillation between these two
 modules.
 
-Second, we also assume independency between modules. Correlation between
+Second, we also assumes independency between modules. Correlation between
 modules doesn't impair our analysis in this paper. In Figure~\ref{fig:heatmap},
 we can tell that the target module and obstacle module tend to be negatively
 correlated from the shape of the white zones.
