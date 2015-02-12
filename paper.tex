@@ -1,6 +1,8 @@
 \documentclass[11pt]{article} % For LaTeX2e
 \usepackage{rldmsubmit,palatino}
 \usepackage{graphicx}
+\usepackage{caption}
+\usepackage{subcaption}
 
 \title{Modular Inverse Reinforcement Learning on Human Motion}
 
@@ -97,15 +99,16 @@ Section~\ref{sec:conclude}.
 \includegraphics[height=5cm]{human.jpg}
 \includegraphics[height=5cm]{env.png}
 \caption{(Left) A human subject with head tracker, virtual reality displayer, and
-body tracker.  (Right) The environment the human can see through the displayer.}
+body tracker.  (Right) The environment the human can see through the displayer.
+The red cubes represent obstacles. The blue balls represent targets. There is
+also a gray path on the ground that the human subject can follow.}
 \label{fig:avatar}
 \end{figure}
 
-%FIXME
-In Figure~\ref{fig:avatar} shows the domain that we use in this paper. The red
-cubes represent obstacles, that the agent would be punished if running
-into. The blue balls represent targets, that the agent would be rewarded if
-collected. There is also a gray path on the ground that the agent can follow.
+Figure~\ref{fig:avatar} shows the domain that we use for the experiment. 
+The agent would be punished if running into obstacles (red cubes), rewarded if
+collecting targets (blue balls). There is a path on the ground that he can
+follow.
 Naturally, this domain has three subtasks, 1) following the path, 2)
 collecting targets, 3) avoiding obstacles.
 This is an experiment used in the
@@ -192,12 +195,27 @@ turning left with a small step, and turning right with a small step.
 
 \begin{figure}[h!]
 \centering
-\includegraphics[width=0.24\textwidth]{task_1.png}
-\includegraphics[width=0.24\textwidth]{task_2.png}
-\includegraphics[width=0.24\textwidth]{task_3.png}
-\includegraphics[width=0.24\textwidth]{task_4.png}
-\caption{The trajectories of humans and the agent in four different tasks. (Path),
-(Obstacle + Path), (Target + Path), (Target + Obstacle + Path), respectively.}
+\begin{subfigure}[b]{0.24\textwidth}
+\includegraphics[width=\textwidth]{task_1.png}
+\caption{Path module only,\\$w = (0.039, 0.0, 0.960)$. }
+\end{subfigure}
+\begin{subfigure}[b]{0.24\textwidth}
+\includegraphics[width=\textwidth]{task_2.png}
+\caption{Obstacle + Path,\\$w = (0.081, 0.264, 0.654)$. }
+\end{subfigure}
+\begin{subfigure}[b]{0.24\textwidth}
+\includegraphics[width=\textwidth]{task_3.png}
+\caption{Target + Path, \\$w = (0.254, 0.089, 0.655)$. }
+\end{subfigure}
+\begin{subfigure}[b]{0.24\textwidth}
+\includegraphics[width=\textwidth]{task_4.png}
+\caption{Target + Obstacle + Path, \\$w = (0.215, 0.414, 0.369)$. }
+\end{subfigure}
+\caption{The trajectories of humans and the agent in four different tasks. The
+black lines are trajectories of human subjects, and the green lines are
+trajectories of the learning agent by using the optimum weights, $w$. Weights
+are shown in target, obstacle, path order.}
+
 \label{fig:exp}
 \end{figure}
 
@@ -210,34 +228,46 @@ drawn in green color.
 
 \begin{figure}[h!]
 \centering
-\includegraphics[width=0.6\textwidth]{contactStats.png}
+\includegraphics[width=0.5\textwidth]{contactStats.png}
 \caption{Number of targets hit and number of obstacles hit of the human subjects
 and the agent.}
-\label{fig:heatmap}
+\label{fig:stats}
 \end{figure}
 
 Although humans don't agree each other on how to avoid obstacles or collecting
 targets, the agent can figure out what the humans are doing, and perform a
-similar trajectory. Table~\ref{tb:human} and Table~\ref{tb:agent} evaluate the
+similar trajectory. Figure~\ref{fig:stats} evaluates the
 performance by showing the number of targets hit and number of obstacles hit.
-Note that the numbers bold-ed are active modules in the corresponding task. We
-can observe that humans still do better than the agent in these tasks.
+We can observe that humans still do better than the agent in these tasks.
 
 \begin{figure}[h!]
 \centering
-\includegraphics[width=0.4\textwidth]{objValuesTask1.png}
-\includegraphics[width=0.4\textwidth]{objValuesTask2.png}
-\includegraphics[width=0.4\textwidth]{objValuesTask3.png}
-\includegraphics[width=0.4\textwidth]{objValuesTask4.png}
-\caption{Heatmaps of the $\log$ of values of Equation~\ref{eq:irl} for different
-weights for the four tasks, respectively. The red zones indicate higher values.
-The upper two are Task 1 and 2. The lower two are Task 3 and 4.
+\begin{subfigure}[b]{0.4\textwidth}
+\includegraphics[width=\textwidth]{objValuesTask1.png}
+\caption{Path following only.}
+\end{subfigure}
+\begin{subfigure}[b]{0.4\textwidth}
+\includegraphics[width=\textwidth]{objValuesTask2.png}
+\caption{Obstacle + Path. }
+\end{subfigure}
+\begin{subfigure}[b]{0.4\textwidth}
+\includegraphics[width=\textwidth]{objValuesTask3.png}
+\caption{Target + Path. }
+\end{subfigure}
+\begin{subfigure}[b]{0.4\textwidth}
+\includegraphics[width=\textwidth]{objValuesTask4.png}
+\caption{Target + Obstacle + Path. }
+\end{subfigure}
+\caption{Heatmaps of the $\log$ of the values of Equation~\ref{eq:irl} for different
+weights for the four tasks, respectively. The white zones indicate higher
+values. The weights of all three modules sum to 1, so we only show the weights
+on the target and the obstacle modules.
 }
 \label{fig:heatmap}
 \end{figure}
 
 In Figure~\ref{fig:heatmap}, we show the $\log$ of values of Equation~\ref{eq:irl} for
-different weights. We can observe the centroids of red zones move for different
+different weights. We can observe the centroids of white zones move for different
 tasks. It stays at the origin in Task 1, so none of target and obstacle modules
 are active. It moves away from the origin when a module is active.
 
@@ -264,7 +294,7 @@ modules.
 Second, we also assumes independency between modules. Correlation between
 modules doesn't impair our analysis in this paper. In Figure~\ref{fig:heatmap},
 we can tell that the target module and obstacle module tend to be negatively
-correlated from the shape of the red zones.
+correlated from the shape of the white zones.
 
 Lastly, weights may be dynamic and different from state to state. However, with
 such assumption, we need to learn a mapping from state to weights. In this case,
