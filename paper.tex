@@ -53,16 +53,21 @@ Austin, TX 78712 \\
 %The abstract should be a maximum of 2000 characters of text, including
 %spaces (no figure is allowed).
 \begin{abstract}
-Human learning is modeled as reinforcement learning in the literature. However,
-human is able to learn complex tasks efficiently, while reinforcement
-learning is known for suffering from the curse of dimensionality. We observe that
-tasks that human handles can usually be decomposed into smaller tasks, and human can
-learn small tasks quickly, and then learn how to integrate them to solve the
-original task. In this paper, we find that modular reinforcement learning can be
-used to model human behavior. We report experiments of using modular inverse
-reinforcement learning to find the way that human combines sub-tasks, given
-samples of real human data. Our simulation demonstrates that human behavior can
-be well explained in this way.
+Reinforcement learning has been seen as a useful model for understanding human
+behavior because of the importance of the neural reward circuitry. However,
+because of the difficulty of scaling up RL models to large state spaces, it has
+been hard to apply these models to complex human behaviors. One potential
+simplification, consistent with observations of natural behavior, is that
+complex tasks can be broken down into independent sub-tasks, or modules . In
+this paper, we use observed human behavior while walking along a path to
+estimate the intrinsic reward values associated with different modular
+sub-tasks. To do this we use a simplified version of Inverse Reinforcement
+Learning to calculate the reward associated with path following, obstacle
+avoidance, and target collection of humans acting in an immersive virtual
+environment. Using the estimated values, a modular RL model can generate
+realistic behavior consistent with human action choices. This provides a way of
+understanding momentary sensorimotor decisions made in complex natural
+environments.
 \end{abstract}
 
 \keywords{
@@ -86,13 +91,11 @@ One promising possibility is that the complex task can be broken down into
 sub-tasks that are each learned separately \cite{sprague2003multiple,
 rothkopf2013modular, dietterich2000hierarchical}. 
 For certain task venues, this decomposition allows the behavior in the complex 
-task to be specified as a weighted sum of individual sub-task priorities.
+task to be chosen based on the value of a weighted sum of individual sub-task priorities.
 This paper explores the use of such a decomposition to characterize complex
 behavior of subjects in a virtual reality environment. The methodology of
 \cite{rothkopf2013modular} allows the task priorities to be estimated using the
-subjects' behavioral data.
-
-Our experimental analysis shows that the modular reinforcement can be a 
+subjects' behavioral data. Our experimental analysis shows that the modular reinforcement can be a 
 surprisingly good model of behavior, predicting individual subjects' sub-task 
 priorities in a way that explains their behavioral choices.
 
@@ -109,8 +112,8 @@ Section~\ref{sec:conclude}.
 \centering
 \includegraphics[height=5cm]{human.jpg}
 \includegraphics[height=5cm]{env.png}
-\caption{(Left) A human subject with head tracker, virtual reality displayer, and
-body tracker.  (Right) The environment the human can see through the displayer.
+\caption{(Left) A human subject with head mounted display, eye, head, and
+body tracker.  (Right) The environment the human can see through the HMD.
 The red cubes represent obstacles. The blue balls represent targets. There is
 also a gray path on the ground that the human subject can follow.}
 \label{fig:avatar}
@@ -118,15 +121,10 @@ also a gray path on the ground that the human subject can follow.}
 
 Figure~\ref{fig:avatar} shows the domain that we used for our experiment. The
 agent, which is a human subject in this case, is in a virtual reality domain.
-We ask the human subject to have trackers and a virtual reality displayer
-equipped. He can see the environment through the displayer in front of his eyes,
-and he can walk as if he is walking in the virtual domain.
-The agent would be punished if running into obstacles (red cubes), and rewarded
-if collecting targets (blue balls). There is a path on the ground that he can
-follow.
-Naturally, this domain has three sub-tasks, 1) following the path, 2)
+The subject’s eye, head, and body motion was tracked as he/she walked through the virtual environment that was scaled to match the dimensions of a real environment. The subject was asked to follow the path, avoid the obstacles (red cubes), and collect the targets (blue balls) by intercepting them. In different conditions they were asked to give different importance to particular sub-tasks. Subjects were given auditory feedback when 
+running into obstacles, and when intercepting targets, depending on their importance in the current condition. Thus this domain has three modules, 1) following the path, 2)
 collecting targets, 3) avoiding obstacles.
-This is an experiment used in the literature to evaluate modular reinforcement
+This paradigm has been used to evaluate modular reinforcement
 learning \cite{rothkopf2013modular} and understand human behavior \cite{Tong2014}.
 
 We will evaluate four different tasks. {\bf Task 1}, following the path only, and
@@ -134,19 +132,15 @@ ignoring other objects. {\bf Task 2}, following the path, while avoiding the obs
 {\bf Task 3}, following the path, while collecting targets when possible. {\bf Task 4},
 following the path, collecting the targets and avoiding obstacles
 simultaneously.
-We conducted experiments to ask human subjects to accomplish these tasks and
-recorded their trajectories. The human data are collected by the Center for
-Perceptual Systems at University of Texas at Austin.
-
+We conducted experiments using 4 human subjects who walked through the environment N times, in each of these conditions. 
 If the agent observes the distance and angle to an object, he is expected to
-know the optimal action to avoid or pursue it. This decision is also Markov.
-Therefore, the question would be, if we have trained modules for these three
-sub-tasks, could they be integrated to match human's behavior?
+know the optimal action to avoid or pursue it. We asked whether an agent with trained modules for these three
+sub-tasks could generate paths that matched human's behavior.
 
 \section{Modular Inverse Reinforcement Learning}
 \label{sec:rl}
 
-Recall that for a state, action
+In Reinforcement Learning with states and actions
 pair, $s$ and $a$, $Q(s, a)$ evaluates the utility of taking action $a$ from
 state $s$. The {\em policy} of a state is the action with the maximum Q
 value \cite{rl}. So how do we determine the global policy from the modules, or
@@ -195,20 +189,18 @@ values of taking other actions.
 
 We trained the modules first to obtain $Q_i$ before running the inverse reinforcement
 learning algorithm. For each module, the agent only considers the closest target
-and the closest obstacle. For the path module, the path is defined as segments
-connected by waypoints, so the next waypoint is considered. The agent takes the
-distance and angle to the closest objects as the state representation.
-
-To make our weights represent the significance of the modules, we
-normalize the sub-MDPs with the unit (positive or negative) reward. The reward
+and the closest obstacle. For the path module, the path was defined as segments
+connected by waypoints, so only the next waypoint is considered. The agent takes the
+distance and angle to the closest objects as the state representation. To make our weights represent the significance of the modules, we
+normalized the sub-MDPs with the unit (positive or negative) reward. The reward
 is 1 for collecting a target, -1 for running into an obstacle, and 1 for
-collecting a waypoint of the path. In the implementation, we make the radius of
+collecting a waypoint of the path. In the implementation, we made the radius of
 waypoints larger than that of other objects, so that the agent will not cling
 too much to the path.
 
-We make some constraints on our learning agent to make it walk like a human.
-We can find from the human trajectories that humans walk smoothly and do not turn
-sharply.  Our agent is only allowed to do three actions --- going straight ahead,
+We set some constraints on the learning agent in order to make it walk like a human.
+We observed from the human trajectories that humans walk smoothly and do not turn
+sharply.  Our agent was only allowed to do three actions --- going straight ahead,
 turning left with a small step, and turning right with a small step.
 
 \begin{figure}[h]
@@ -246,21 +238,19 @@ and the agent.}
 \label{fig:stats}
 \end{figure}
 
-We report the results in Figure~\ref{fig:exp}. Same as Figure~\ref{fig:avatar},
-the red circles are obstacles. The blue circles are targets. The gray lines are
-the path. The black lines are trajectories of human --- each line represents one
+The results are shown in Figure~\ref{fig:exp}. As in Figure~\ref{fig:avatar},
+the red circles are obstacles and the blue circles are targets. The gray lines are
+the path. The black lines are trajectories of individual human subjects --- each line represents one
 human trajectory.
 Using the weights derived from the algorithm, the trajectories of the agents are
-drawn in green color.
-
-Although humans don't agree with each other on how to avoid obstacles or collect
-targets, the agent can figure out what the humans are doing, and perform a
-similar behavior. Figure~\ref{fig:stats} evaluates the
+drawn in green. Although human performance is variable on how to avoid obstacles or collect
+targets, the agent can figure out what the humans are doing, and perform 
+similarly. Figure~\ref{fig:stats} evaluates the
 performance by showing the number of targets hit and number of obstacles hit.
 The number of targets hit should be large, and the number of obstacles hit
 should be small, when the corresponding module is active.
 We can observe that humans still do better than the agent in these tasks.
-Nevertheless, the agent has a similar performance compared to human subjects.
+Nevertheless, the agent performance is quite similar to that of the human subjects.
 
 \begin{figure}[h]
 \centering
@@ -293,34 +283,29 @@ Equation~\ref{eq:irl} for different weights. The white color represents higher
 probability. We can observe the centroids of white zones move for different
 tasks. It stays at the origin in Task 1, so none of the target module and
 obstacle module is active. It moves away from the origin when a module is
-active.  From the heatmaps, we find the optimums exist for these tasks. The
+active.  From the heatmaps, we find that fairly well-defined optima exist for these tasks. The
 optimal weights are also consistent with the experiment context.
 
-\section{Conclusion and Future Work}
+\section{Conclusions}
 \label{sec:conclude}
 
-We interpreted human behavior using inverse module reinforcement learning in
+We interpreted human behavior using inverse modular reinforcement learning in
 this paper. The experimental results show that modular reinforcement learning
 can well explain human behavior, even though the performance of the agent is
 inferior to human subjects'.
 
-There are also some observations potential for the future work. First, 
-weighted sum of Q functions is one way to combine multiple sub-MDPs. We also
-propose other ways including, for example, scheduling between different modules,
+Note that a 
+weighted sum of Q functions is just one way to combine multiple sub-MDPs. Other ways are possible, including, for example, scheduling between different modules,
 with only one active at one time. This is also called {\em skill} in the literature
 \cite{konidaris2009skill}. However, we adopt the weighted sum approach
 because this is more reasonable for human behavior. When a human tries to collect
 targets while avoiding obstacles, these two modules are expected to be both
 active. A scheduling approach may yield frequent oscillation between these two
-modules.
-
-Second, we also assume independency between modules. Correlation between
+modules. Note also that we assume independence between modules. Correlation between
 modules doesn't impair our analysis in this paper. In Figure~\ref{fig:heatmap},
 we can tell that the target module and obstacle module tend to be negatively
-correlated from the shape of the white zones.
-
-Lastly, weights may be dynamic and different from state to state. However, with
-such assumption, we need to learn a mapping from state to weights. In this case,
+correlated from the shape of the white zones. Lastly, weights may be dynamic and different from state to state. However, with
+such an assumption we need to learn a mapping from state to weights. In this case,
 the curse of dimensionality still exists, and inverse learning would be
 difficult.
 
