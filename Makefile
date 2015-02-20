@@ -5,6 +5,7 @@ all:
 	pdflatex paper.tex
 
 diff:
+	latexdiff old/paper.tex paper.tex > diff.tex
 	pdflatex diff.tex
 	bibtex diff
 	pdflatex diff.tex

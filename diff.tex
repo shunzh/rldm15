@@ -1,4 +1,7 @@
 \documentclass[11pt]{article} % For LaTeX2e
+%DIF LATEXDIFF DIFFERENCE FILE
+%DIF DEL old/paper.tex   Thu Feb 19 18:32:57 2015
+%DIF ADD paper.tex       Thu Feb 19 21:09:56 2015
 \usepackage{rldmsubmit,palatino}
 \usepackage{graphicx}
 \usepackage{sidecap}
@@ -46,6 +49,25 @@ Austin, TX 78712 \\
 \newcommand{\new}{\marginpar{NEW}}
 
 \newcommand{\commentd}[1]{{\bf **Dana: #1**}}
+%DIF PREAMBLE EXTENSION ADDED BY LATEXDIFF
+%DIF UNDERLINE PREAMBLE %DIF PREAMBLE
+\RequirePackage[normalem]{ulem} %DIF PREAMBLE
+\RequirePackage{color}\definecolor{RED}{rgb}{1,0,0}\definecolor{BLUE}{rgb}{0,0,1} %DIF PREAMBLE
+\providecommand{\DIFadd}[1]{{\protect\color{blue}\uwave{#1}}} %DIF PREAMBLE
+\providecommand{\DIFdel}[1]{{\protect\color{red}\sout{#1}}}                      %DIF PREAMBLE
+%DIF SAFE PREAMBLE %DIF PREAMBLE
+\providecommand{\DIFaddbegin}{} %DIF PREAMBLE
+\providecommand{\DIFaddend}{} %DIF PREAMBLE
+\providecommand{\DIFdelbegin}{} %DIF PREAMBLE
+\providecommand{\DIFdelend}{} %DIF PREAMBLE
+%DIF FLOATSAFE PREAMBLE %DIF PREAMBLE
+\providecommand{\DIFaddFL}[1]{\DIFadd{#1}} %DIF PREAMBLE
+\providecommand{\DIFdelFL}[1]{\DIFdel{#1}} %DIF PREAMBLE
+\providecommand{\DIFaddbeginFL}{} %DIF PREAMBLE
+\providecommand{\DIFaddendFL}{} %DIF PREAMBLE
+\providecommand{\DIFdelbeginFL}{} %DIF PREAMBLE
+\providecommand{\DIFdelendFL}{} %DIF PREAMBLE
+%DIF END PREAMBLE EXTENSION ADDED BY LATEXDIFF
 
 \begin{document}
 
@@ -157,15 +179,25 @@ how do we determine the global policy from the modules, or sub-tasks?
 %the sub-tasks \cite{koller1999computing}. The sub-tasks can also propose their
 %own policies, while the global policy is a weighted sum of those sub-task
 %policies \cite{thomas2012motor}.
+\DIFdelbegin \DIFdel{\textcolor{red}{COMMENT - DO NOT LEAVE IN Shun, the modular formulation started with Sprague et al ACM Trans. of Applied Perception 4(2), 1 , 2007 and this should be referenced.
+The Parr and Koller paper is about factored MDPs which is diofferent than modular MDPs. The Thomas and Barto is a much more recent paper
+that learns motor MDPs in a very restructed domain.}
+}\DIFdelend 
 
-%COMMENT: Shun, the modular formulation started with Sprague et al ACM Trans. of Applied Perception 4(2), 1 , 2007 and this should be referenced.
-%The Parr and Koller paper is about factored MDPs which is diofferent than modular MDPs. The Thomas and Barto is a much more recent paper
-%that learns motor MDPs in a very restructed domain.
-In the literature, modular formation is proposed for understanding human
-visuomotor behavior \cite{sprague2007modeling}. A combination of various basic
+\DIFdelbegin \DIFdel{Following (Sprague and Ballard 2007, Rothkopf and Ballard 2013), we }\DIFdelend %DIF > COMMENT: Shun, the modular formulation started with Sprague et al ACM Trans. of Applied Perception 4(2), 1 , 2007 and this should be referenced.
+%DIF > The Parr and Koller paper is about factored MDPs which is diofferent than modular MDPs. The Thomas and Barto is a much more recent paper
+%DIF > that learns motor MDPs in a very restructed domain.
+\DIFaddbegin \DIFadd{In the literature, modular formation is proposed for understanding human
+visuomotor behavior \mbox{%DIFAUXCMD
+\cite{sprague2007modeling}
+}%DIFAUXCMD
+. A combination of various basic
 modules can generate complex behavior to match human behavior.
-Following \cite{sprague2007modeling, rothkopf2013modular}, we consider how the
-modules can be combined. Here we assume that the global Q function is a weighted
+Following \mbox{%DIFAUXCMD
+\cite{sprague2007modeling, rothkopf2013modular}
+}%DIFAUXCMD
+, we consider how the
+modules can be combined. Here we }\DIFaddend assume that the global Q function is a weighted
 sum of all $Q_i$, where $Q_i$ is the Q function for i-th module.
 $$Q(s, a) = \sum_i w_i Q_i (s_i, a)$$
 where $w_i$ is the weight of the i-th sub-MDP. $w_i \geq 0, \sum_i w_i = 1$.
@@ -184,7 +216,10 @@ find out the underlying MDP by observing policies. A common
 way is to use a maximum likelihood method to recover the transition function and
 the reward function \cite{ng2000algorithms}, but this approach is very expensive
 as some kind of learning is used in the innermost search loop. The modular
-approach allows a much more economical approach \cite{rothkopf2013modular},
+approach allows a much more economical approach \DIFdelbegin \DIFdel{(Rothkopf and Ballard)}\DIFdelend \DIFaddbegin \DIFadd{\mbox{%DIFAUXCMD
+\cite{rothkopf2013modular}
+}%DIFAUXCMD
+}\DIFaddend ,
 since we module weights are the only free parameters. The transition function is
 known, and the reward function is trivially the weighted sum of that of modules.
 More precisely, we use the modular inverse reinforcement learning method in
@@ -220,9 +255,11 @@ too much to the path.
 We set some constraints on the learning agent in order to make it walk roughly
 like a human while keeping the action space small.  We observed from the human
 trajectories that humans walk smoothly and do not turn sharply.  Our agent was
-only allowed to do three actions --- going straight ahead (0.3 meter),
-turning left with a small step (30 degrees to the left), and turning right with
-a small step (30 degrees to the right).
+only allowed to do three actions --- going straight ahead \DIFaddbegin \DIFadd{(0.3 meter)}\DIFaddend ,
+turning left with a small step \DIFaddbegin \DIFadd{(30 degrees to the left)}\DIFaddend , and turning right with
+a small step \DIFdelbegin \DIFdel{. \textcolor{red}{COMMENT It would be good to say how much in degrees}
+}\DIFdelend \DIFaddbegin \DIFadd{(30 degrees to the right).
+}\DIFaddend 
 
 \begin{figure}[h]
 \centering
@@ -253,27 +290,31 @@ obstacle, path).}
 
 \begin{figure}[h]
 \centering
-\begin{subfigure}[b]{0.24\textwidth}
+\DIFdelbeginFL %DIFDELCMD < \includegraphics[width=0.5\textwidth]{contactStats.png}
+%DIFDELCMD < %%%
+\DIFdelendFL \DIFaddbeginFL \begin{subfigure}[b]{0.24\textwidth}
 \includegraphics[width=\textwidth]{contact1.png}
-\caption{Path module only. }
-\end{subfigure}
+\DIFaddendFL \caption{\DIFdelbeginFL \DIFdelFL{Number of targets hit and number of obstacles hit of the human subjects 
+and the agent}\DIFdelendFL \DIFaddbeginFL \DIFaddFL{Path module only}\DIFaddendFL . \DIFdelbeginFL \DIFdelFL{\textcolor{red}{COMMENT Shun it would be much better if you used black and green in this figure instead of blue and red since it agree 
+with your previous figure. Also as a side comment its rather obvious that you could do better by using a path constraint that was not so severe}}\DIFdelendFL }
+\DIFaddbeginFL \end{subfigure}
 \begin{subfigure}[b]{0.24\textwidth}
 \includegraphics[width=\textwidth]{contact2.png}
-\caption{Obstacle + Path. }
+\caption{\DIFaddFL{Obstacle + Path. }}
 \end{subfigure}
 \begin{subfigure}[b]{0.24\textwidth}
 \includegraphics[width=\textwidth]{contact3.png}
-\caption{Target + Path. }
+\caption{\DIFaddFL{Target + Path. }}
 \end{subfigure}
 \begin{subfigure}[b]{0.24\textwidth}
 \includegraphics[width=\textwidth]{contact4.png}
-\caption{Target + Obstacle + Path. }
+\caption{\DIFaddFL{Target + Obstacle + Path. }}
 \end{subfigure}
-\caption{Number of targets hit and number of obstacles hit of the human subjects 
-and the agent.}
-%COMMENT Shun it would be much better if you used black and green in this figure instead of blue and red since it agree 
-%with your previous figure. Also as a side comment its rather obvious that you could do better by using a path constraint that was not so severe
-\label{fig:stats}
+\caption{\DIFaddFL{Number of targets hit and number of obstacles hit of the human subjects 
+and the agent.}}
+%DIF > COMMENT Shun it would be much better if you used black and green in this figure instead of blue and red since it agree 
+%DIF > with your previous figure. Also as a side comment its rather obvious that you could do better by using a path constraint that was not so severe
+\DIFaddendFL \label{fig:stats}
 \end{figure}
 
 

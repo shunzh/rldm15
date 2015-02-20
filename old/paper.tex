@@ -157,16 +157,12 @@ how do we determine the global policy from the modules, or sub-tasks?
 %the sub-tasks \cite{koller1999computing}. The sub-tasks can also propose their
 %own policies, while the global policy is a weighted sum of those sub-task
 %policies \cite{thomas2012motor}.
+\textcolor{red}{COMMENT - DO NOT LEAVE IN Shun, the modular formulation started with Sprague et al ACM Trans. of Applied Perception 4(2), 1 , 2007 and this should be referenced.
+The Parr and Koller paper is about factored MDPs which is diofferent than modular MDPs. The Thomas and Barto is a much more recent paper
+that learns motor MDPs in a very restructed domain.}
 
-%COMMENT: Shun, the modular formulation started with Sprague et al ACM Trans. of Applied Perception 4(2), 1 , 2007 and this should be referenced.
-%The Parr and Koller paper is about factored MDPs which is diofferent than modular MDPs. The Thomas and Barto is a much more recent paper
-%that learns motor MDPs in a very restructed domain.
-In the literature, modular formation is proposed for understanding human
-visuomotor behavior \cite{sprague2007modeling}. A combination of various basic
-modules can generate complex behavior to match human behavior.
-Following \cite{sprague2007modeling, rothkopf2013modular}, we consider how the
-modules can be combined. Here we assume that the global Q function is a weighted
-sum of all $Q_i$, where $Q_i$ is the Q function for i-th module.
+Following (Sprague and Ballard 2007, Rothkopf and Ballard 2013), we assume that the global Q function is a weighted sum of all $Q_i$, where
+$Q_i$ is the Q function for i-th module.
 $$Q(s, a) = \sum_i w_i Q_i (s_i, a)$$
 where $w_i$ is the weight of the i-th sub-MDP. $w_i \geq 0, \sum_i w_i = 1$.
 $s_i$ denotes the decomposition of $s$ in the i-th module.
@@ -182,13 +178,12 @@ reinforcement learning. In reinforcement learning, we derive
 optimal policies given an MDP. In inverse reinforcement learning, however, aims to
 find out the underlying MDP by observing policies. A common
 way is to use a maximum likelihood method to recover the transition function and
-the reward function \cite{ng2000algorithms}, but this approach is very expensive
-as some kind of learning is used in the innermost search loop. The modular
-approach allows a much more economical approach \cite{rothkopf2013modular},
-since we module weights are the only free parameters. The transition function is
-known, and the reward function is trivially the weighted sum of that of modules.
-More precisely, we use the modular inverse reinforcement learning method in
-\cite{rothkopf2013modular} to maximize the function below.
+the reward function \cite{ng2000algorithms}, but this approach is very expensive as some kind of learning
+is used in the innermost search loop. The modular approach allows a much more economical approach (Rothkopf and Ballard), since we module weights
+are the only free parameters. The transition function is known, and the reward function is
+trivially the weighted sum of that of modules. More precisely, we use the modular
+inverse reinforcement learning method in \cite{rothkopf2013modular} to maximize the
+function below.
 \begin{equation}
 \label{eq:irl}
 \max_w \prod_t \frac{e^{\eta Q(s^{(t)}, a^{(t)})}}{\sum_b e^{\eta Q(s^{(t)}, b)}}
@@ -220,9 +215,8 @@ too much to the path.
 We set some constraints on the learning agent in order to make it walk roughly
 like a human while keeping the action space small.  We observed from the human
 trajectories that humans walk smoothly and do not turn sharply.  Our agent was
-only allowed to do three actions --- going straight ahead (0.3 meter),
-turning left with a small step (30 degrees to the left), and turning right with
-a small step (30 degrees to the right).
+only allowed to do three actions --- going straight ahead, turning left with a
+small step, and turning right with a small step. \textcolor{red}{COMMENT It would be good to say how much in degrees}
 
 \begin{figure}[h]
 \centering
@@ -253,26 +247,10 @@ obstacle, path).}
 
 \begin{figure}[h]
 \centering
-\begin{subfigure}[b]{0.24\textwidth}
-\includegraphics[width=\textwidth]{contact1.png}
-\caption{Path module only. }
-\end{subfigure}
-\begin{subfigure}[b]{0.24\textwidth}
-\includegraphics[width=\textwidth]{contact2.png}
-\caption{Obstacle + Path. }
-\end{subfigure}
-\begin{subfigure}[b]{0.24\textwidth}
-\includegraphics[width=\textwidth]{contact3.png}
-\caption{Target + Path. }
-\end{subfigure}
-\begin{subfigure}[b]{0.24\textwidth}
-\includegraphics[width=\textwidth]{contact4.png}
-\caption{Target + Obstacle + Path. }
-\end{subfigure}
+\includegraphics[width=0.5\textwidth]{contactStats.png}
 \caption{Number of targets hit and number of obstacles hit of the human subjects 
-and the agent.}
-%COMMENT Shun it would be much better if you used black and green in this figure instead of blue and red since it agree 
-%with your previous figure. Also as a side comment its rather obvious that you could do better by using a path constraint that was not so severe
+and the agent.\textcolor{red}{COMMENT Shun it would be much better if you used black and green in this figure instead of blue and red since it agree 
+with your previous figure. Also as a side comment its rather obvious that you could do better by using a path constraint that was not so severe}}
 \label{fig:stats}
 \end{figure}
 
