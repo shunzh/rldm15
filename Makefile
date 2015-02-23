@@ -13,3 +13,6 @@ diff:
 
 clear:
 	rm *.blg *.log *.pdf *.bbl *.aux
+
+distribute:
+	scp paper.pdf menie482@zarroli.cs.utexas.edu:~/public_html/papers/rldm15.pdf

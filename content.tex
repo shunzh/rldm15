@@ -53,7 +53,7 @@ given auditory feedback when running into obstacles, and when intercepting
 targets, depending on their importance in the current condition. Thus this
 domain can be modeled by three modules, 1) following the path, 2) collecting targets, 3)
 avoiding obstacles.  This general paradigm has been used to evaluate modular
-reinforcement learning \cite{rothkopf2013modular} and understand human behavior
+reinforcement learning \cite{Rothkopf12Infer, rothkopf2013modular} and understand human behavior
 \cite{Tong2014}.
 
 We evaluate four different tasks. {\bf Task 1}, following the path only, and
@@ -84,7 +84,9 @@ how do we determine the global policy from the modules, or sub-tasks?
 %that learns motor MDPs in a very restructed domain.
 In the literature, modular formation is proposed for understanding human
 visuomotor behavior \cite{sprague2007modeling}. A combination of various basic
-modules can generate complex behavior to match human behavior.
+modules can generate complex behavior to match human behavior.  The combination
+can be either of Q functions of modules \cite{rothkopf2013modular} or of rewards
+of modules \cite{Rothkopf12Infer}.
 Following \cite{sprague2007modeling, rothkopf2013modular}, we consider how the
 modules can be combined. Here we assume that the global Q function is a weighted
 sum of all $Q_i$, where $Q_i$ is the Q function for i-th module.

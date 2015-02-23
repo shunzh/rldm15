@@ -1,7 +1,7 @@
 \documentclass[11pt]{article} % For LaTeX2e
 %DIF LATEXDIFF DIFFERENCE FILE
 %DIF DEL old/paper.tex   Thu Feb 19 18:32:57 2015
-%DIF ADD paper.tex       Thu Feb 19 21:09:56 2015
+%DIF ADD paper.tex       Fri Feb 20 15:04:57 2015
 \usepackage{rldmsubmit,palatino}
 \usepackage{graphicx}
 \usepackage{sidecap}
@@ -154,7 +154,13 @@ given auditory feedback when running into obstacles, and when intercepting
 targets, depending on their importance in the current condition. Thus this
 domain can be modeled by three modules, 1) following the path, 2) collecting targets, 3)
 avoiding obstacles.  This general paradigm has been used to evaluate modular
-reinforcement learning \cite{rothkopf2013modular} and understand human behavior
+reinforcement learning \DIFdelbegin \DIFdel{\mbox{%DIFAUXCMD
+\cite{rothkopf2013modular}
+}%DIFAUXCMD
+}\DIFdelend \DIFaddbegin \DIFadd{\mbox{%DIFAUXCMD
+\cite{Rothkopf12Infer, rothkopf2013modular}
+}%DIFAUXCMD
+}\DIFaddend and understand human behavior
 \cite{Tong2014}.
 
 We evaluate four different tasks. {\bf Task 1}, following the path only, and
@@ -192,7 +198,15 @@ visuomotor behavior \mbox{%DIFAUXCMD
 \cite{sprague2007modeling}
 }%DIFAUXCMD
 . A combination of various basic
-modules can generate complex behavior to match human behavior.
+modules can generate complex behavior to match human behavior.  The combination
+can be either of Q functions of modules \mbox{%DIFAUXCMD
+\cite{rothkopf2013modular}
+}%DIFAUXCMD
+or of rewards
+of modules \mbox{%DIFAUXCMD
+\cite{Rothkopf12Infer}
+}%DIFAUXCMD
+.
 Following \mbox{%DIFAUXCMD
 \cite{sprague2007modeling, rothkopf2013modular}
 }%DIFAUXCMD
