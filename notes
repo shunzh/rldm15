@@ -1,0 +1,12 @@
+- references: bayesian irl (in constaintine)
+  - decision making?
+
+- compare
+  - greedy / reflex
+  - round-robin modular
+  - scheduling
+  - Ng's method?
+
+- eval
+  - toy domain
+  - human world: sanity check, human data
