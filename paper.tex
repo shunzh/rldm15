@@ -1,38 +1,19 @@
-\documentclass[11pt]{article} % For LaTeX2e
-\usepackage{rldmsubmit,palatino}
+\documentclass{article} % For LaTeX2e
+\usepackage{nips15submit_e,times}
+\usepackage{hyperref}
+\usepackage{url}
 \usepackage{graphicx}
 \usepackage{sidecap}
 \usepackage{caption}
 \usepackage{subcaption}
+%\documentstyle[nips14submit_09,times,art10]{article} % For LaTeX 2.09
+
 
 \title{Modular Inverse Reinforcement Learning on Human Motion}
 
-\author{
-Shun Zhang\\
-Department of Computer Science\\
-University of Texas at Austin\\
-Austin, TX 78712 \\
-\texttt{menie482@cs.utexas.edu} \\
-\And
-Matthew Tong \\
-Center for Perceptual Systems\\
-University of Texas at Austin\\
-Austin, TX 78712 \\
-\texttt{mhtong@gmail.com} \\
-\AND
-Mary Hayhoe \\
-Center for Perceptual Systems\\
-University of Texas at Austin\\
-Austin, TX 78712 \\
-\texttt{hayhoe@utexas.edu} \\
-\And
-Dana Ballard \\
-Department of Computer Science\\
-University of Texas at Austin\\
-Austin, TX 78712 \\
-\texttt{dana@cs.utexas.edu} \\
-\\
-}
+
+%\author{
+%}
 
 % The \author macro works with any number of authors. There are two commands
 % used to separate the names and addresses of multiple authors: \And and \AND.
@@ -45,14 +26,12 @@ Austin, TX 78712 \\
 \newcommand{\fix}{\marginpar{FIX}}
 \newcommand{\new}{\marginpar{NEW}}
 
-\newcommand{\commentd}[1]{{\bf **Dana: #1**}}
+%\nipsfinalcopy % Uncomment for camera-ready version
 
 \begin{document}
 
 \maketitle
 
-%The abstract should be a maximum of 2000 characters of text, including
-%spaces (no figure is allowed).
 \begin{abstract}
 Reinforcement learning has been seen as a useful model for understanding human
 behavior because of the importance of the neural reward circuitry. However,
@@ -71,13 +50,11 @@ understanding momentary sensorimotor decisions made in complex natural
 environments.
 \end{abstract}
 
-\keywords{
-Reinforcement learning, human motion, inverse learning
-}
-
-\startmain % to start the main 1-4 pages of the submission.
-
-\include{content}
+\input{1-intro}
+\input{2-domain}
+\input{3-irl}
+\input{4-experiments}
+\input{5-conclusion}
 
 \bibliographystyle{plain}
 \bibliography{paper}

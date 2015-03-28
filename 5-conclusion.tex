@@ -1,0 +1,23 @@
+\section{Conclusions}
+\label{sec:conclude}
+
+We analyzed human behavior using inverse modular reinforcement learning. The
+experimental results show that modular reinforcement learning can explain human
+behavior well, even though the performance of the agent is currently inferior to
+human subjects'.
+
+Note that a weighted sum of Q functions is just one way to combine multiple
+sub-MDPs. Other ways are possible, including, for example, scheduling between
+different modules, with only one active at one time. This is also called {\em
+skill} in the literature \cite{konidaris2009skill}. However, we adopt the
+weighted sum approach because this is more reasonable for human behavior. When a
+human tries to collect targets while avoiding obstacles, these two modules are
+expected to be both active. A scheduling approach may yield frequent oscillation
+between these two modules. Note also that we assume independence between
+modules. However, correlation between modules doesn't impair our analysis in
+this paper. In Figure~\ref{fig:heatmap}, we can tell that the target module and
+obstacle module tend to be negatively correlated from the shape of the white
+zones. Lastly, weights may be dynamic and different from state to state.
+However, with such an assumption we need to learn a mapping from state to
+weights. In this case, the curse of dimensionality still exists, and inverse
+learning would be difficult.

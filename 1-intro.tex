@@ -1,0 +1,30 @@
+\section{Introduction}
+
+A large body of evidence from human and other primate studies 
+suggests that they use reinforcement signals to learn tasks and reinforcement 
+learning has proved to be a good model for this process.
+However humans are able to learn and carry out very complex tasks involving 
+many different objectives. 
+How can they do this? The likelihood is that they use reinforcement in this 
+context as well, but most formal reinforcement learning models do not scale 
+well with increasing complexity.
+
+One promising possibility is that the complex task can be broken down into 
+sub-tasks that are each learned separately \cite{sprague2003multiple,
+rothkopf2013modular, dietterich2000hierarchical}. 
+For certain task venues, this decomposition allows the behavior in the complex 
+task to be chosen based on the value of a weighted sum of individual sub-task priorities.
+This paper explores the use of such a decomposition to characterize complex
+behavior of subjects in a virtual reality environment. The methodology of
+\cite{rothkopf2013modular} allows the task priorities to be estimated using the
+subjects' behavioral data. Our experimental analysis shows that the modular reinforcement can be a 
+surprisingly good model of behavior, predicting individual subjects' sub-task 
+priorities in a way that explains their behavioral choices.
+
+This paper is organized as follows. Section~\ref{sec:domain} introduces the
+domain and the composite task structure that we collected human data. Section~\ref{sec:rl}
+describes the main algorithm, modular inverse reinforcement learning. We report
+our experiment results in Section~\ref{sec:exp}, and conclude in
+Section~\ref{sec:conclude}.
+
+
