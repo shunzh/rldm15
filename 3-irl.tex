@@ -1,28 +1,26 @@
 \section{Modular Inverse Reinforcement Learning}
 \label{sec:rl}
 
+% TODO expand this
 In Reinforcement Learning, when given a state and action pair, $s$ and $a$, the
 function $Q(s, a)$ evaluates the utility of taking action $a$ from state $s$.
 The {\em policy} of a state is the action with the maximum Q value \cite{rl}. So
 how do we determine the global policy from the modules, or sub-tasks?
 
-%In the
-%literature, work has been done to integrate the decomposed value functions of
-%the sub-tasks \cite{koller1999computing}. The sub-tasks can also propose their
-%own policies, while the global policy is a weighted sum of those sub-task
-%policies \cite{thomas2012motor}.
-
-%COMMENT: Shun, the modular formulation started with Sprague et al ACM Trans. of Applied Perception 4(2), 1 , 2007 and this should be referenced.
-%The Parr and Koller paper is about factored MDPs which is diofferent than modular MDPs. The Thomas and Barto is a much more recent paper
-%that learns motor MDPs in a very restructed domain.
 In the literature, modular formation is proposed for understanding human
 visuomotor behavior \cite{sprague2007modeling}. A combination of various basic
 modules can generate complex behavior to match human behavior.  The combination
 can be either of Q functions of modules \cite{rothkopf2013modular} or of rewards
 of modules \cite{Rothkopf12Infer}.
-Following \cite{sprague2007modeling, rothkopf2013modular}, we consider how the
+Other work has been done to integrate the decomposed value functions of
+the sub-tasks \cite{koller1999computing}. The sub-tasks can also propose their
+own policies, while the global policy is a weighted sum of those sub-task
+policies \cite{thomas2012motor}.
+
+We now consider how the
 modules can be combined. Here we assume that the global Q function is a weighted
-sum of all $Q_i$, where $Q_i$ is the Q function for i-th module.
+sum of all $Q_i$ \cite{sprague2007modeling, rothkopf2013modular}, where $Q_i$ is
+the Q function for i-th module.
 $$Q(s, a) = \sum_i w_i Q_i (s_i, a)$$
 where $w_i$ is the weight of the i-th sub-MDP. $w_i \geq 0, \sum_i w_i = 1$.
 $s_i$ denotes the decomposition of $s$ in the i-th module.
@@ -33,6 +31,7 @@ collection, obstacle avoidance, and path following, respectively. An agent with
 $w = (1, 0, 0)$ only collects targets, and one with $w = (0, 0.5, 0.5)$ may
 avoid the obstacles and follow the path.
 
+% TODO mention discounters here
 To obtain the weights given the samples of observed human behavior, we use inverse
 reinforcement learning. In reinforcement learning, we derive 
 optimal policies given an MDP. In inverse reinforcement learning, however, aims to
@@ -45,6 +44,7 @@ since we module weights are the only free parameters. The transition function is
 known, and the reward function is trivially the weighted sum of that of modules.
 More precisely, we use the modular inverse reinforcement learning method in
 \cite{rothkopf2013modular} to maximize the function below.
+% TODO more details
 \begin{equation}
 \label{eq:irl}
 \max_w \prod_t \frac{e^{\eta Q(s^{(t)}, a^{(t)})}}{\sum_b e^{\eta Q(s^{(t)}, b)}}
