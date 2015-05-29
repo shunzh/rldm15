@@ -21,7 +21,31 @@ University of Texas at Austin}
 % left
 \begin{textblock}{37}(1,8)
 \begin{block}{Introduction}
-blahh
+\begin{itemize}
+\item
+One promising possibility is that the complex task can be broken down into 
+sub-tasks that are each learned separately.
+\end{itemize}
+\end{block}
+
+\begin{block}{Modular Inverse Reinforcement Learning}
+\begin{itemize}
+\item {\bf Reinforcement Learning.}
+\item {\bf Modular Renforcement Learning.}
+We assume that the global Q function is a weighted
+sum of all $Q_i$, where $Q_i$ is the Q function for i-th module.
+$$Q(s, a) = \sum_i w_i Q_i (s_i, a)$$
+where $w_i$ is the weight of the i-th sub-MDP. $w_i \geq 0, \sum_i w_i = 1$.
+$s_i$ denotes the decomposition of $s$ in the i-th module.
+\item {\bf Modular Inverse Reinforcement Learning.}
+We maximize the objective function
+$$\max_w \prod_t \frac{e^{\eta Q(s^{(t)}, a^{(t)})}}{\sum_b e^{\eta Q(s^{(t)},
+b)}}$$
+where $s^{(t)}$ is the state at time $t$, and $a^{(t)}$ is the action at time
+$t$, which are both from samples. $Q(s, a) = \sum_i w_i Q_i(s_i, a)$, as defined
+before. $\eta$ is a hyperparameter that determines the consistency of human's
+behavior.
+\end{itemize}
 \end{block}
 \end{textblock}
 
@@ -122,6 +146,39 @@ the weights on the target and the obstacle modules.
 \label{fig:heatmap}
 \end{figure}
 \end{block}
+
+\begin{block}{Conclusion}
+\begin{itemize}
+\item
+We analyzed human behavior using inverse modular reinforcement learning.
+\item
+The experimental results show that modular reinforcement learning can explain
+human behavior well, even though the performance of the agent is currently
+inferior to human subjects'.
+\end{itemize}
+\end{block}
+
+\begin{block}{Following Work}
+\begin{itemize}
+\item
+Learning weights (or rewards) and discounters of sub-MDPs simutanously.
+\item
+Testing in gridworld domains, with hundreds of sub-MDPs. We compared modular IRL
+and Bayesian IRL in this condition.
+\item
+Evaluation by angular differences in policies, and likelihood of trajectories.
+This is compared with other baseline agents.
+\end{itemize}
+
+{\bf Watch our follow-up paper in a future conference!}
+\end{block}
+
+\begin{block}{Acknowledgement}
+\begin{itemize}
+\item Funding.
+\end{itemize}
+\end{block}
+
 \end{textblock}
 
 \end{frame}
