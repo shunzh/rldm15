@@ -1,0 +1,128 @@
+\documentclass[final]{beamer}
+\usetheme{RJH}
+\usepackage[width=180,height=120,scale=1.5,debug]{beamerposter}
+\usepackage[absolute,overlay]{textpos}
+\setlength{\TPHorizModule}{1cm}
+\setlength{\TPVertModule}{1cm}
+
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{subcaption}
+
+\title{Modular Inverse Reinforcement Learning on Human Motion}
+\author{Shun Zhang, Matthew Tong, Mary Hayhoe, Dana Ballard\\
+Department of Computer Science, Center for Perceptual Systems\\
+University of Texas at Austin}
+\footer{}
+
+\begin{document}
+\begin{frame}{} 
+
+% left
+\begin{textblock}{37}(1,8)
+\begin{block}{Introduction}
+blahh
+\end{block}
+\end{textblock}
+
+% middle
+\begin{textblock}{37}(40,8)
+\begin{block}{Multi-objective Domain}
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.2\textwidth]{human.jpg}
+\includegraphics[width=0.6\textwidth]{env.png}
+\caption{(Left) A human subject with a head mounted display (HMD) and trackers
+for the eye, head, and body.  (Right) The environment the human can see through
+the HMD.  The red cubes represent obstacles. The blue balls represent targets.
+There is also a gray path on the ground that the human subject can follow.}
+\label{fig:avatar}
+\end{figure}
+\end{block}
+
+\begin{block}{Experiments}
+\begin{figure}[h]
+\centering
+\begin{subfigure}[b]{0.4\textwidth}
+\includegraphics[width=\textwidth]{task_1.png}
+\caption{Path module only,\\$w = (0.039, 0.0, 0.960)$. }
+\end{subfigure}
+\begin{subfigure}[b]{0.4\textwidth}
+\includegraphics[width=\textwidth]{task_2.png}
+\caption{Obstacle + Path,\\$w = (0.081, 0.264, 0.654)$. }
+\end{subfigure}
+\begin{subfigure}[b]{0.4\textwidth}
+\includegraphics[width=\textwidth]{task_3.png}
+\caption{Target + Path, \\$w = (0.254, 0.089, 0.655)$. }
+\end{subfigure}
+\begin{subfigure}[b]{0.4\textwidth}
+\includegraphics[width=\textwidth]{task_4.png}
+\caption{Target + Obstacle + Path, \\$w = (0.215, 0.414, 0.369)$. }
+\end{subfigure}
+\caption{The trajectories of humans and the agent in the four tasks. Targets are blue and obstacles are red. The
+black lines are trajectories of human subjects, and the green lines are
+trajectories of the learning agent by using the optimum weights, $w$, derived
+from modular inverse reinforcement learning. Weights for each task are given as (target,
+obstacle, path).}
+\label{fig:exp}
+\end{figure}
+
+\end{block}
+\end{textblock}
+
+% right
+\begin{textblock}{37}(79,8)
+\begin{block}{Experiments}
+\begin{figure}[h]
+\centering
+\begin{subfigure}[b]{0.24\textwidth}
+\includegraphics[width=\textwidth]{contact1.png}
+\caption{Path module only. }
+\end{subfigure}
+\begin{subfigure}[b]{0.24\textwidth}
+\includegraphics[width=\textwidth]{contact2.png}
+\caption{Obstacle + Path. }
+\end{subfigure}
+\begin{subfigure}[b]{0.24\textwidth}
+\includegraphics[width=\textwidth]{contact3.png}
+\caption{Target + Path. }
+\end{subfigure}
+\begin{subfigure}[b]{0.24\textwidth}
+\includegraphics[width=\textwidth]{contact4.png}
+\caption{All modules. }
+\end{subfigure}
+\caption{Number of targets hit and number of obstacles hit of the human subjects 
+and the agent.}
+\label{fig:stats}
+\end{figure}
+
+\begin{figure}[h]
+\centering
+\begin{subfigure}[b]{0.24\textwidth}
+\includegraphics[width=\textwidth]{objValuesTask1.png}
+\caption{Path following.}
+\end{subfigure}
+\begin{subfigure}[b]{0.24\textwidth}
+\includegraphics[width=\textwidth]{objValuesTask2.png}
+\caption{Obstacle + Path. }
+\end{subfigure}
+\begin{subfigure}[b]{0.24\textwidth}
+\includegraphics[width=\textwidth]{objValuesTask3.png}
+\caption{Target + Path. }
+\end{subfigure}
+\begin{subfigure}[b]{0.24\textwidth}
+\includegraphics[width=\textwidth]{objValuesTask4.png}
+\caption{All modules. }
+\end{subfigure}
+\caption{Heatmaps of the $\log$ of the values of Equation~\ref{eq:irl} for
+different weights for the four tasks, respectively. The white zones indicate
+higher probabilities. The weights of all three modules sum to 1, so we only show
+the weights on the target and the obstacle modules.
+}
+\label{fig:heatmap}
+\end{figure}
+\end{block}
+\end{textblock}
+
+\end{frame}
+\end{document}

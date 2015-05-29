@@ -4,6 +4,9 @@ all:
 	pdflatex paper.tex
 	pdflatex paper.tex
 
+present:
+	pdflatex present.tex
+
 diff:
 	latexdiff old/paper.tex paper.tex > diff.tex
 	pdflatex diff.tex
