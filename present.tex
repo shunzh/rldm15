@@ -11,7 +11,7 @@
 
 \title{Modular Inverse Reinforcement Learning on Human Motion}
 \author{Shun Zhang, Matthew Tong, Mary Hayhoe, Dana Ballard\\
-Department of Computer Science, Center for Perceptual Systems\\
+Department of Computer Science, Center of Perceptual Systems\\
 University of Texas at Austin}
 \footer{}
 
@@ -23,15 +23,29 @@ University of Texas at Austin}
 \begin{block}{Introduction}
 \begin{itemize}
 \item
+Humans are able to learn and carry out very complex tasks involving 
+many different objectives, while most reinforcement learning algorithms suffer
+from the curse of dimensionality.
+\item
 One promising possibility is that the complex task can be broken down into 
-sub-tasks that are each learned separately.
+{\bf sub-tasks} that are each learned separately.
+\item
+This {\bf decomposition} allows the behavior in the complex task to be chosen based on
+the value of a weighted sum of individual sub-tasks.
+\item
+Our experimental analysis shows that the modular reinforcement can be a 
+good model of predicting {\bf human subjects'} sub-task priorities in a way that
+explains their behavioral choices.
+\item
+We use the {\bf Modular Inverse Reinforcement Learning} approach to analyze
+human subjects' behaviors.
 \end{itemize}
 \end{block}
 
 \begin{block}{Modular Inverse Reinforcement Learning}
 \begin{itemize}
-\item {\bf Reinforcement Learning.}
-\item {\bf Modular Renforcement Learning.}
+\item {\bf MDP decomposition.}
+\item {\bf Modular Reinforcement Learning.}
 We assume that the global Q function is a weighted
 sum of all $Q_i$, where $Q_i$ is the Q function for i-th module.
 $$Q(s, a) = \sum_i w_i Q_i (s_i, a)$$
@@ -101,19 +115,19 @@ obstacle, path).}
 \centering
 \begin{subfigure}[b]{0.24\textwidth}
 \includegraphics[width=\textwidth]{contact1.png}
-\caption{Path module only. }
+\caption{Path module only.}
 \end{subfigure}
 \begin{subfigure}[b]{0.24\textwidth}
 \includegraphics[width=\textwidth]{contact2.png}
-\caption{Obstacle + Path. }
+\caption{Obstacle + Path.}
 \end{subfigure}
 \begin{subfigure}[b]{0.24\textwidth}
 \includegraphics[width=\textwidth]{contact3.png}
-\caption{Target + Path. }
+\caption{Target + Path.}
 \end{subfigure}
 \begin{subfigure}[b]{0.24\textwidth}
 \includegraphics[width=\textwidth]{contact4.png}
-\caption{All modules. }
+\caption{All modules.}
 \end{subfigure}
 \caption{Number of targets hit and number of obstacles hit of the human subjects 
 and the agent.}
@@ -138,7 +152,7 @@ and the agent.}
 \includegraphics[width=\textwidth]{objValuesTask4.png}
 \caption{All modules. }
 \end{subfigure}
-\caption{Heatmaps of the $\log$ of the values of Equation~\ref{eq:irl} for
+\caption{Heatmaps of the $\log$ of the likelihood for
 different weights for the four tasks, respectively. The white zones indicate
 higher probabilities. The weights of all three modules sum to 1, so we only show
 the weights on the target and the obstacle modules.
@@ -161,10 +175,10 @@ inferior to human subjects'.
 \begin{block}{Following Work}
 \begin{itemize}
 \item
-Learning weights (or rewards) and discounters of sub-MDPs simutanously.
+Learning weights (or rewards) and discounters of sub-MDPs simultaneously.
 \item
-Testing in gridworld domains, with hundreds of sub-MDPs. We compared modular IRL
-and Bayesian IRL in this condition.
+Testing in gridworld domains, with hundreds of sub-MDPs. We compared Modular IRL
+with Bayesian IRL in this condition.
 \item
 Evaluation by angular differences in policies, and likelihood of trajectories.
 This is compared with other baseline agents.
@@ -173,9 +187,10 @@ This is compared with other baseline agents.
 {\bf Watch our follow-up paper in a future conference!}
 \end{block}
 
-\begin{block}{Acknowledgement}
+\begin{block}{Acknowledgment}
 \begin{itemize}
 \item Funding.
+\item Ruohan Zhang, on his separate work on modular reinforcement learning.
 \end{itemize}
 \end{block}
 
