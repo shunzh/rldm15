@@ -11,7 +11,7 @@
 
 \title{Modular Inverse Reinforcement Learning on Human Motion}
 \author{Shun Zhang, Matthew Tong, Mary Hayhoe, Dana Ballard\\
-Department of Computer Science, Center of Perceptual Systems\\
+Department of Computer Science, Center for Perceptual Systems\\
 University of Texas at Austin}
 \footer{}
 
@@ -19,7 +19,7 @@ University of Texas at Austin}
 \begin{frame}{} 
 
 % left
-\begin{textblock}{37}(1,8)
+\begin{textblock}{35}(1,8)
 \begin{block}{Introduction}
 \begin{itemize}
 \item
@@ -44,15 +44,22 @@ human subjects' behaviors.
 
 \begin{block}{Modular Inverse Reinforcement Learning}
 \begin{itemize}
-\item {\bf MDP decomposition.}
-\item {\bf Modular Reinforcement Learning.}
-We assume that the global Q function is a weighted
-sum of all $Q_i$, where $Q_i$ is the Q function for i-th module.
+\item {\bf Factored MDP.}
+Define $S = S_1 \times S_2 \times \cdots \times S_m$, where $S_i$ is a state
+component. We expect the state components are less correlated. The transition
+function can be defined as a Dynamic Bayesian Network between two time frames of
+state components.
+\item {\bf Q-Decomposition.}
+We further decompose the Q function.
+Assume that the global Q function is a weighted sum of all $Q_i$, where $Q_i$ is
+the Q function for $S_i$, the $i$-th state component.
 $$Q(s, a) = \sum_i w_i Q_i (s_i, a)$$
-where $w_i$ is the weight of the i-th sub-MDP. $w_i \geq 0, \sum_i w_i = 1$.
-$s_i$ denotes the decomposition of $s$ in the i-th module.
+where $w_i$ is a weight scalar. $w_i \geq 0, \sum_i w_i = 1$.
+Now the original MDP is {\bf modularized} into sub-MDPs.
+$$MDP_i = <S_i, A, T, R_i, \gamma>$$
 \item {\bf Modular Inverse Reinforcement Learning.}
-We maximize the objective function
+The objective is to recover the weights given observed samples, $(s^{(i)},
+a^{(i)})$, and sub-MDPs.  We maximize the likelihood of observing such samples,
 $$\max_w \prod_t \frac{e^{\eta Q(s^{(t)}, a^{(t)})}}{\sum_b e^{\eta Q(s^{(t)},
 b)}}$$
 where $s^{(t)}$ is the state at time $t$, and $a^{(t)}$ is the action at time
@@ -64,7 +71,7 @@ behavior.
 \end{textblock}
 
 % middle
-\begin{textblock}{37}(40,8)
+\begin{textblock}{37}(38,8)
 \begin{block}{Multi-objective Domain}
 \begin{figure}[h]
 \centering
@@ -109,7 +116,7 @@ obstacle, path).}
 \end{textblock}
 
 % right
-\begin{textblock}{37}(79,8)
+\begin{textblock}{39}(77,8)
 \begin{block}{Experiments}
 \begin{figure}[h]
 \centering
@@ -138,7 +145,7 @@ and the agent.}
 \centering
 \begin{subfigure}[b]{0.24\textwidth}
 \includegraphics[width=\textwidth]{objValuesTask1.png}
-\caption{Path following.}
+\caption{Path module only.}
 \end{subfigure}
 \begin{subfigure}[b]{0.24\textwidth}
 \includegraphics[width=\textwidth]{objValuesTask2.png}
@@ -154,8 +161,8 @@ and the agent.}
 \end{subfigure}
 \caption{Heatmaps of the $\log$ of the likelihood for
 different weights for the four tasks, respectively. The white zones indicate
-higher probabilities. The weights of all three modules sum to 1, so we only show
-the weights on the target and the obstacle modules.
+higher probabilities. The vertical axis is the weight of the target module. The
+horizontal axis is the weight of the obstacle module.
 }
 \label{fig:heatmap}
 \end{figure}
@@ -184,13 +191,12 @@ Evaluation by angular differences in policies, and likelihood of trajectories.
 This is compared with other baseline agents.
 \end{itemize}
 
-{\bf Watch our follow-up paper in a future conference!}
+{\bf More details in our paper to appear in a future conference!}
 \end{block}
 
 \begin{block}{Acknowledgment}
 \begin{itemize}
-\item Funding.
-\item Ruohan Zhang, on his separate work on modular reinforcement learning.
+\item Funding?
 \end{itemize}
 \end{block}
 
