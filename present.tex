@@ -1,6 +1,6 @@
 \documentclass[final]{beamer}
 \usetheme{RJH}
-\usepackage[width=180,height=120,scale=1.5,debug]{beamerposter}
+\usepackage[size=custom,width=240,height=180,scale=3.3,debug]{beamerposter}
 \usepackage[absolute,overlay]{textpos}
 \setlength{\TPHorizModule}{1cm}
 \setlength{\TPVertModule}{1cm}
@@ -19,7 +19,7 @@ University of Texas at Austin}
 \begin{frame}{} 
 
 % left
-\begin{textblock}{35}(1,8)
+\begin{textblock}{73}(2,18)
 \begin{block}{Introduction}
 \begin{itemize}
 \item
@@ -46,9 +46,7 @@ human subjects' behaviors.
 \begin{itemize}
 \item {\bf Factored MDP.}
 Define $S = S_1 \times S_2 \times \cdots \times S_m$, where $S_i$ is a state
-component. We expect the state components are less correlated. The transition
-function can be defined as a Dynamic Bayesian Network between two time frames of
-state components.
+component. We expect the state components are less correlated.
 \item {\bf Q-Decomposition.}
 We further decompose the Q function.
 Assume that the global Q function is a weighted sum of all $Q_i$, where $Q_i$ is
@@ -56,7 +54,6 @@ the Q function for $S_i$, the $i$-th state component.
 $$Q(s, a) = \sum_i w_i Q_i (s_i, a)$$
 where $w_i$ is a weight scalar. $w_i \geq 0, \sum_i w_i = 1$.
 Now the original MDP is {\bf modularized} into sub-MDPs.
-$$MDP_i = <S_i, A, T, R_i, \gamma>$$
 \item {\bf Modular Inverse Reinforcement Learning.}
 The objective is to recover the weights given observed samples, $(s^{(i)},
 a^{(i)})$, and sub-MDPs.  We maximize the likelihood of observing such samples,
@@ -71,7 +68,7 @@ behavior.
 \end{textblock}
 
 % middle
-\begin{textblock}{37}(38,8)
+\begin{textblock}{69}(79,18)
 \begin{block}{Multi-objective Domain}
 \begin{figure}[h]
 \centering
@@ -88,27 +85,28 @@ There is also a gray path on the ground that the human subject can follow.}
 \begin{block}{Experiments}
 \begin{figure}[h]
 \centering
-\begin{subfigure}[b]{0.4\textwidth}
+\begin{subfigure}[b]{0.47\textwidth}
 \includegraphics[width=\textwidth]{task_1.png}
 \caption{Path module only,\\$w = (0.039, 0.0, 0.960)$. }
 \end{subfigure}
-\begin{subfigure}[b]{0.4\textwidth}
+\begin{subfigure}[b]{0.47\textwidth}
 \includegraphics[width=\textwidth]{task_2.png}
 \caption{Obstacle + Path,\\$w = (0.081, 0.264, 0.654)$. }
 \end{subfigure}
-\begin{subfigure}[b]{0.4\textwidth}
+\begin{subfigure}[b]{0.47\textwidth}
 \includegraphics[width=\textwidth]{task_3.png}
 \caption{Target + Path, \\$w = (0.254, 0.089, 0.655)$. }
 \end{subfigure}
-\begin{subfigure}[b]{0.4\textwidth}
+\begin{subfigure}[b]{0.47\textwidth}
 \includegraphics[width=\textwidth]{task_4.png}
 \caption{Target + Obstacle + Path, \\$w = (0.215, 0.414, 0.369)$. }
 \end{subfigure}
-\caption{The trajectories of humans and the agent in the four tasks. Targets are blue and obstacles are red. The
+\caption{Weights for each task are given as (target,
+obstacle, path).\\
+The trajectories of humans and the agent in the four tasks. Targets are blue and obstacles are red. The
 black lines are trajectories of human subjects, and the green lines are
 trajectories of the learning agent by using the optimum weights, $w$, derived
-from modular inverse reinforcement learning. Weights for each task are given as (target,
-obstacle, path).}
+from modular inverse reinforcement learning. }
 \label{fig:exp}
 \end{figure}
 
@@ -116,7 +114,7 @@ obstacle, path).}
 \end{textblock}
 
 % right
-\begin{textblock}{39}(77,8)
+\begin{textblock}{86}(152,18)
 \begin{block}{Experiments}
 \begin{figure}[h]
 \centering
@@ -168,7 +166,7 @@ horizontal axis is the weight of the obstacle module.
 \end{figure}
 \end{block}
 
-\begin{block}{Conclusion}
+\begin{block}{Discussion and Conclusion}
 \begin{itemize}
 \item
 We analyzed human behavior using inverse modular reinforcement learning.
@@ -176,6 +174,10 @@ We analyzed human behavior using inverse modular reinforcement learning.
 The experimental results show that modular reinforcement learning can explain
 human behavior well, even though the performance of the agent is currently
 inferior to human subjects'.
+\item
+The weighted sum of Q functions is just one way to combine multiple
+sub-MDPs. Other ways, for example, scheduling between different modules, are
+also possible.
 \end{itemize}
 \end{block}
 
